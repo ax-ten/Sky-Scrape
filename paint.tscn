@@ -1,0 +1,45 @@
+[gd_scene load_steps=10 format=3 uid="uid://b16s40ir2yssu"]
+
+[ext_resource type="Script" uid="uid://cjc2e8ns2k7db" path="res://paintmesh.gd" id="1_rbnhw"]
+[ext_resource type="Script" uid="uid://c1ndexesbn02y" path="res://paint.gd" id="2_fkh5u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rbnhw"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_irvwu"]
+albedo_color = Color(0.880876, 0.857449, 0.807539, 1)
+
+[sub_resource type="Gradient" id="Gradient_fkh5u"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_irvwu"]
+gradient = SubResource("Gradient_fkh5u")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkh5u"]
+albedo_color = Color(0.291675, 0.173328, 0.277441, 1)
+albedo_texture = SubResource("GradientTexture1D_irvwu")
+
+[sub_resource type="BoxMesh" id="BoxMesh_irvwu"]
+material = SubResource("StandardMaterial3D_fkh5u")
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rbnhw"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="Mesh" type="MeshInstance3D" node_paths=PackedStringArray("paint")]
+material_override = SubResource("StandardMaterial3D_rbnhw")
+material_overlay = SubResource("StandardMaterial3D_irvwu")
+mesh = SubResource("BoxMesh_irvwu")
+surface_material_override/0 = SubResource("StandardMaterial3D_fkh5u")
+script = ExtResource("1_rbnhw")
+paint = NodePath("Paint")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_rbnhw")
+
+[node name="Paint" type="Node" parent="."]
+script = ExtResource("2_fkh5u")
+color = Color(0.648509, 0.721865, 0.518093, 1)
+metadata/_custom_type_script = "uid://c1ndexesbn02y"

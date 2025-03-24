@@ -1,0 +1,283 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqcqo4kvsupkj"]
+
+[sub_resource type="GDScript" id="GDScript_qeo0d"]
+script/source = "@tool
+extends HBoxContainer
+
+var target: WFCGridMap
+
+@onready var mesh_selector := $MeshSelector
+@onready var direction_lists : Array[ItemList]= [
+	$\"GridContainer/X+/ItemList\",
+	$\"GridContainer/X-/ItemList\",
+	$\"GridContainer/Y+/ItemList\",
+	$\"GridContainer/Y-/ItemList\",
+	$\"GridContainer/Z+/ItemList\",
+	$\"GridContainer/Z-/ItemList\"
+]
+
+var mesh_id_map: Array[int] = []
+var base_selection_ids: Array[int] = []
+
+
+func set_target(wfc: WFCGridMap):
+	target = wfc
+	if target.mesh_library:
+		_refresh_mesh_list()
+		if mesh_selector.item_count > 0:
+			mesh_selector.select(0)
+			_on_mesh_selected(0)
+
+func _refresh_mesh_list():
+	mesh_selector.clear()
+	mesh_id_map.clear()
+	for id in target.mesh_library.get_item_list():
+		var icon = target.mesh_library.get_item_preview(id)
+		mesh_selector.add_item(\"\")
+		if icon:
+			mesh_selector.set_item_icon(mesh_selector.get_item_count() - 1, icon)
+		mesh_id_map.append(id)
+	_update_highlight()
+
+func _ready():
+	mesh_selector.select_mode = ItemList.SELECT_MULTI
+	mesh_selector.mouse_filter = Control.MOUSE_FILTER_STOP
+	mesh_selector.connect(\"item_selected\", Callable(self, \"_on_mesh_selected\"))
+	mesh_selector.connect(\"gui_input\", Callable(self, \"_on_mesh_selector_input\"))
+
+	for i in range(direction_lists.size()):
+		var list = direction_lists[i]
+		list.mouse_filter = Control.MOUSE_FILTER_STOP
+		list.connect(\"item_clicked\", Callable(self, \"_on_direction_list_item_clicked\").bind(i))
+		list.set_drag_forwarding(_get_drag_data, _can_drop_data, _drop_data)
+
+func _on_mesh_selector_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		var clicked_index = mesh_selector.get_item_at_position(event.position)
+		if clicked_index >= 0:
+			var mesh_id = mesh_id_map[clicked_index]
+			if mesh_id in base_selection_ids:
+				base_selection_ids.erase(mesh_id)
+			else:
+				base_selection_ids.append(mesh_id)
+			_update_highlight()
+			get_viewport().set_input_as_handled()
+
+
+func _update_highlight():
+	for i in range(mesh_selector.item_count):
+		var id = mesh_id_map[i]
+
+		mesh_selector.set_item_custom_fg_color(i, Color.GREEN if id in base_selection_ids else Color.WHITE)
+		
+func _on_mesh_selected(_index: int):
+	# Non aggiornare le direzioni qui
+	pass
+
+func _can_drop_data(position, data):
+	return typeof(data) == TYPE_DICTIONARY and data.has(\"mesh_id\")
+
+func _drop_data(position, data):
+	print(\"[DEBUG] drop_data() chiamato con:\", data)
+	if not _can_drop_data(position, data):
+		return
+
+	var from_id = data.mesh_id
+	if base_selection_ids.is_empty():
+		return
+
+	const DIR_NAMES = [\"+X\", \"-X\", \"+Y\", \"-Y\", \"+Z\", \"-Z\"]
+
+	for i in range(direction_lists.size()):
+		var list = direction_lists[i]
+		var rect = list.get_global_rect()
+		if rect.has_point(get_global_mouse_position()):
+			if target.adjacency_config:
+				for base_id in base_selection_ids:
+					var current = target.adjacency_config.get_compatible(base_id, DIR_NAMES[i])
+					if from_id not in current:
+						current.append(from_id)
+					target.adjacency_config.set_rule(base_id, DIR_NAMES[i], current)
+			_refresh_direction_lists()
+			break
+
+func _get_drag_data(at_position: Vector2) -> Variant:
+	var selected = mesh_selector.get_selected_items()
+	if selected.is_empty():
+		return null
+	var id = mesh_id_map[selected[0]]
+	var icon = mesh_selector.get_item_icon(selected[0])
+	var preview = TextureRect.new()
+	preview.texture = icon
+	preview.expand_mode = TextureRect.EXPAND_KEEP_SIZE
+	set_drag_preview(preview)
+	return {\"mesh_id\": id}
+	
+	
+func _refresh_direction_lists():
+	const DIR_NAMES = [\"+X\", \"-X\", \"+Y\", \"-Y\", \"+Z\", \"-Z\"]
+	for i in range(direction_lists.size()):
+		direction_lists[i].clear()
+		var ids := []
+		if not base_selection_ids.is_empty():
+			# Mostra solo la prima selezione
+			ids = target.adjacency_config.get_compatible(base_selection_ids[0], DIR_NAMES[i])
+
+
+func _on_direction_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int, direction_index: int):
+	if base_selection_ids.is_empty():
+		return
+	var base_id = base_selection_ids[0]
+	var dir_name = [\"+X\", \"-X\", \"+Y\", \"-Y\", \"+Z\", \"-Z\"][direction_index]
+	var current = target.adjacency_config.get_compatible(base_id, dir_name)
+	var removed_id = current[index]
+	current.erase(removed_id)
+	target.adjacency_config.set_rule(base_id, dir_name, current)
+	_refresh_direction_lists()
+"
+
+[sub_resource type="FontVariation" id="FontVariation_5txhr"]
+
+[node name="GridmapEditor" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_right = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_qeo0d")
+
+[node name="MeshSelector" type="ItemList" parent="."]
+layout_mode = 2
+select_mode = 1
+auto_width = true
+max_columns = 3
+same_column_width = true
+icon_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="X+" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/X+"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "+X"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/X+"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true
+
+[node name="X-" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/X-"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "-X"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/X-"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true
+
+[node name="Y+" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/Y+"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "+Y"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/Y+"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true
+
+[node name="Y-" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/Y-"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "-Y"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/Y-"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true
+
+[node name="Z+" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/Z+"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "+Z"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/Z+"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true
+
+[node name="Z-" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/Z-"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_5txhr")
+text = "-Z"
+horizontal_alignment = 2
+
+[node name="ItemList" type="ItemList" parent="GridContainer/Z-"]
+custom_minimum_size = Vector2(100, 60)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+allow_rmb_select = true
+max_columns = 910
+same_column_width = true

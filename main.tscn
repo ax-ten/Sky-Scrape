@@ -1,0 +1,749 @@
+[gd_scene load_steps=59 format=3 uid="uid://brcxm0pfp5j6v"]
+
+[ext_resource type="Script" uid="uid://1h70dkdegyle" path="res://camera.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://dqxw82uj3aty2" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cis143jvnus1a" path="res://spawner.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c7w1n7ieg7h40" path="res://Assets/secchio di vernice.tscn" id="4_1bvp3"]
+[ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://PalazzoMeshLibrary.tres" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bd6oy6px0gqtm" path="res://world_environment.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="6_vivmo"]
+[ext_resource type="PackedScene" uid="uid://bk26ugv40ivho" path="res://Assets/PezziPalazzo/laterale.tscn" id="7_272bh"]
+[ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/mesh_adjacency_inspector/adjacency_rule.gd" id="7_yaehf"]
+[ext_resource type="Script" uid="uid://bcbrgsrsbab2j" path="res://item_spawner.gd" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://c8d8674bs8nmm" path="res://addons/wfc_generator/mesh_adjacency_configuration.gd" id="8_074og"]
+[ext_resource type="Script" uid="uid://c6xomc08ollxr" path="res://tutorial.gd" id="9_dg77c"]
+[ext_resource type="Texture2D" uid="uid://gwsbkptyhf04" path="res://Assets/manotutorial.png" id="9_kek77"]
+[ext_resource type="Texture2D" uid="uid://ble764l7wjywq" path="res://Assets/frecciaSx.png" id="10_efxa6"]
+[ext_resource type="Texture2D" uid="uid://37kupm565d5a" path="res://Assets/frecciaDx.png" id="11_dg77c"]
+[ext_resource type="Texture2D" uid="uid://cu0rgp4cqdc0e" path="res://Assets/frecciaUp.png" id="13_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://bt3i6pct5kdy3" path="res://UI.tscn" id="14_w48qg"]
+
+[sub_resource type="Gradient" id="Gradient_w48qg"]
+offsets = PackedFloat32Array(0, 0.367021, 0.521277, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.31616, 0.31616, 0.31616, 1, 0.800491, 0.800491, 0.800491, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vivmo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2cqfq"]
+width = 925
+height = 1085
+generate_mipmaps = false
+seamless = true
+color_ramp = SubResource("Gradient_w48qg")
+noise = SubResource("FastNoiseLite_vivmo")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lquwl"]
+sky_top_color = Color(2.79158e-06, 0.663659, 0.805506, 1)
+sky_curve = 0.321532
+sky_cover = SubResource("NoiseTexture2D_2cqfq")
+
+[sub_resource type="Sky" id="Sky_7mycd"]
+sky_material = SubResource("ProceduralSkyMaterial_lquwl")
+
+[sub_resource type="Environment" id="Environment_272bh"]
+background_mode = 2
+sky = SubResource("Sky_7mycd")
+sky_rotation = Vector3(-0.867429, 0, 0.558505)
+ambient_light_color = Color(0, 0.543779, 0.641963, 1)
+fog_enabled = true
+fog_sky_affect = 0.081
+volumetric_fog_density = 0.0
+
+[sub_resource type="Resource" id="Resource_yaehf"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_074og"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_cegan"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_82xsv"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_getpj"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_ryguw"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_d13ii"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_1u8w0"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_0odxb"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_lswn8"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_a6jrf"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_xuqvo"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_qsp4k"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_kq58d"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_seu75"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_htxhm"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_jq2sk"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_4k2k6"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_0rl1p"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_ok6jj"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_facbu"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_b1qrp"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_come4"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_h8e4i"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_4lmeg"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_0cp0l"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_d2t1y"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_gngh3"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_0n3wm"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_qnost"]
+script = ExtResource("7_yaehf")
+X_pos = Dictionary[int, float]({})
+X_neg = Dictionary[int, float]({})
+Y_pos = Dictionary[int, float]({})
+Y_neg = Dictionary[int, float]({})
+Z_pos = Dictionary[int, float]({})
+Z_neg = Dictionary[int, float]({})
+
+[sub_resource type="Resource" id="Resource_wnkbs"]
+script = ExtResource("8_074og")
+rules = Dictionary[int, ExtResource("7_yaehf")]({
+0: SubResource("Resource_yaehf"),
+1: SubResource("Resource_074og"),
+2: SubResource("Resource_cegan"),
+3: SubResource("Resource_82xsv"),
+4: SubResource("Resource_getpj"),
+5: SubResource("Resource_ryguw"),
+6: SubResource("Resource_d13ii"),
+7: SubResource("Resource_1u8w0"),
+8: SubResource("Resource_0odxb"),
+9: SubResource("Resource_lswn8"),
+10: SubResource("Resource_a6jrf"),
+11: SubResource("Resource_xuqvo"),
+12: SubResource("Resource_qsp4k"),
+13: SubResource("Resource_kq58d"),
+14: SubResource("Resource_seu75"),
+15: SubResource("Resource_htxhm"),
+16: SubResource("Resource_jq2sk"),
+17: SubResource("Resource_4k2k6"),
+18: SubResource("Resource_0rl1p"),
+19: SubResource("Resource_ok6jj"),
+20: SubResource("Resource_facbu"),
+21: SubResource("Resource_b1qrp"),
+22: SubResource("Resource_come4"),
+23: SubResource("Resource_h8e4i"),
+24: SubResource("Resource_4lmeg"),
+25: SubResource("Resource_0cp0l"),
+26: SubResource("Resource_d2t1y"),
+27: SubResource("Resource_gngh3"),
+28: SubResource("Resource_0n3wm"),
+29: SubResource("Resource_qnost")
+})
+metadata/_custom_type_script = "uid://c8d8674bs8nmm"
+
+[sub_resource type="Animation" id="Animation_w48qg"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_vivmo"]
+resource_name = "pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = PackedFloat32Array(0, 1, 0, -1.23, 0, 1.46667, 1, -1.715, -0.885, 0)
+tracks/1/type = "scale_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = PackedFloat32Array(0, 1, 1, 1, 1, 2, 1, 1.2, 1.2, 1.2)
+
+[sub_resource type="Animation" id="Animation_2cqfq"]
+resource_name = "pulse_dx"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 1, 1, 1, 1.96667, 1, 1.2, 1.2, 1.2)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = PackedFloat32Array(0.0333333, 1, 0, -1.23, 0, 1.46667, 1, 1.715, -0.885, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yaehf"]
+_data = {
+&"RESET": SubResource("Animation_w48qg"),
+&"pulseSx": SubResource("Animation_vivmo"),
+&"pulse_dx": SubResource("Animation_2cqfq")
+}
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.777146, 0.62932, 0, -0.62932, 0.777146, 0, 2.2265, 4.12902)
+keep_aspect = 0
+fov = 90.0
+script = ExtResource("1_0xm2m")
+
+[node name="PlayerSpawner" type="Node3D" parent="." groups=["playerspawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84765, 0.0143394)
+script = ExtResource("3_h2yge")
+playerscene = ExtResource("1_ig7tw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_272bh")
+script = ExtResource("6_7mycd")
+
+[node name="WFCGridMap" type="GridMap" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, -3.39289, 0, 0)
+mesh_library = ExtResource("5_lquwl")
+cell_size = Vector3(3.4, 0.532, 3.4)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+cell_scale = 0.2
+data = {
+"cells": PackedInt32Array(65533, 65501, 19, 65533, 65502, 19, 65533, 65503, 19, 65533, 65504, 19, 65533, 65505, 19, 65533, 65506, 19, 65533, 65507, 19, 65533, 65508, 19, 65533, 65509, 19, 65533, 65510, 19, 65533, 65511, 19, 65533, 65512, 19, 65533, 65513, 19, 65533, 65514, 19, 65533, 65515, 19, 65533, 65516, 19, 65533, 65517, 19, 65533, 65518, 19, 65533, 65519, 19, 65533, 65520, 19, 65533, 65521, 19, 65533, 65522, 19, 65533, 65523, 19, 65533, 65524, 19, 65533, 65525, 19, 65533, 65526, 19, 65533, 65527, 19, 65533, 65528, 19, 65533, 65529, 19, 65533, 65530, 19, 65533, 65531, 19, 65533, 65532, 19, 65533, 65533, 19, 65533, 65534, 19, 65533, 65535, 19, 65533, 0, 19, 65534, 65501, 19, 65534, 65502, 19, 65534, 65503, 19, 65534, 65504, 19, 65534, 65505, 19, 65534, 65506, 19, 65534, 65507, 19, 65534, 65508, 19, 65534, 65509, 19, 65534, 65510, 19, 65534, 65511, 19, 65534, 65512, 19, 65534, 65513, 19, 65534, 65514, 19, 65534, 65515, 19, 65534, 65516, 19, 65534, 65517, 19, 65534, 65518, 19, 65534, 65519, 19, 65534, 65520, 19, 65534, 65521, 19, 65534, 65522, 19, 65534, 65523, 19, 65534, 65524, 19, 65534, 65525, 19, 65534, 65526, 19, 65534, 65527, 19, 65534, 65528, 19, 65534, 65529, 19, 65534, 65530, 19, 65534, 65531, 19, 65534, 65532, 19, 65534, 65533, 19, 65534, 65534, 19, 65534, 65535, 19, 65534, 0, 19, 65535, 65501, 19, 65535, 65502, 19, 65535, 65503, 19, 65535, 65504, 19, 65535, 65505, 19, 65535, 65506, 19, 65535, 65507, 19, 65535, 65508, 19, 65535, 65509, 19, 65535, 65510, 19, 65535, 65511, 19, 65535, 65512, 19, 65535, 65513, 19, 65535, 65514, 19, 65535, 65515, 19, 65535, 65516, 19, 65535, 65517, 19, 65535, 65518, 19, 65535, 65519, 19, 65535, 65520, 19, 65535, 65521, 19, 65535, 65522, 19, 65535, 65523, 19, 65535, 65524, 19, 65535, 65525, 19, 65535, 65526, 19, 65535, 65527, 19, 65535, 65528, 19, 65535, 65529, 19, 65535, 65530, 19, 65535, 65531, 19, 65535, 65532, 19, 65535, 65533, 19, 65535, 65534, 19, 65535, 65535, 19, 65535, 0, 19, 0, 65501, 19, 0, 65502, 19, 0, 65503, 19, 0, 65504, 19, 0, 65505, 19, 0, 65506, 19, 0, 65507, 19, 0, 65508, 19, 0, 65509, 19, 0, 65510, 19, 0, 65511, 19, 0, 65512, 19, 0, 65513, 19, 0, 65514, 19, 0, 65515, 19, 0, 65516, 19, 0, 65517, 19, 0, 65518, 19, 0, 65519, 19, 0, 65520, 19, 0, 65521, 19, 0, 65522, 19, 0, 65523, 19, 0, 65524, 19, 0, 65525, 19, 0, 65526, 19, 0, 65527, 19, 0, 65528, 19, 0, 65529, 19, 0, 65530, 19, 0, 65531, 19, 0, 65532, 19, 0, 65533, 19, 0, 65534, 19, 0, 65535, 19, 0, 0, 19, -3, 65533, 2, -3, 65534, 0, -3, 65535, 8, -3, 0, 13, -2, 65533, 1, -2, 65534, 0, -2, 65535, 17, -2, 0, 11, -1, 65533, 16, -1, 65534, 29, -1, 65535, 2, -1, 0, 6, -65536, 65533, 2, -65536, 65534, 13, -65536, 65535, 11, -65536, 0, 19)
+}
+script = ExtResource("6_vivmo")
+adjacency_config = SubResource("Resource_wnkbs")
+metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Laterali" type="Node3D" parent="WFCGridMap"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -32.4349)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap/Laterali"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap/Laterali"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="Laterali2" type="Node3D" parent="WFCGridMap"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -5.37651)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap/Laterali2"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali2/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap/Laterali2"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali2/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="Laterali3" type="Node3D" parent="WFCGridMap"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -86.5244)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap/Laterali3"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali3/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap/Laterali3"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali3/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="Laterali4" type="Node3D" parent="WFCGridMap"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -59.466)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap/Laterali4"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali4/LateraliSX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap/Laterali4"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale7" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -11.5291)
+
+[node name="Laterale8" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap/Laterali4/LateraliDX" instance=ExtResource("7_272bh")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="ItemSpawner" type="Node3D" parent="." groups=["ItemSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.279595, -22.0263)
+script = ExtResource("8_5vw27")
+spawnables = Array[PackedScene]([ExtResource("4_1bvp3")])
+
+[node name="Label" type="Label" parent="ItemSpawner"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Positions" type="Node3D" parent="ItemSpawner"]
+
+[node name="Position2" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.00187, 0, 0.143015)
+
+[node name="Position3" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.98304, 0, 0.143015)
+
+[node name="Position4" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01805, 0, 0.143015)
+
+[node name="Position5" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00131, 0, 0.143015)
+
+[node name="Position6" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.02014, 0, 0.143015)
+
+[node name="Position7" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.98513, 0, 0.143015)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.663617, 0.607753, 0.436174, -0.0029999, -0.580897, 0.813971, 0.748066, -0.541474, -0.383671, 0, 0, 0)
+light_specular = 0.05
+light_bake_mode = 1
+shadow_enabled = true
+shadow_normal_bias = 10.0
+shadow_opacity = 0.56
+shadow_blur = 1.571
+
+[node name="TutorialSwipe" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.57901, -0.633024)
+script = ExtResource("9_dg77c")
+
+[node name="Sprite3D" type="Sprite3D" parent="TutorialSwipe"]
+billboard = 1
+texture = ExtResource("9_kek77")
+
+[node name="FrecciaSx" type="Sprite3D" parent="TutorialSwipe"]
+transform = Transform3D(1.09677, 0, 0, 0, 1.09677, 0, 0, 0, 1.09677, -1.0732, 0, 0)
+billboard = 1
+texture = ExtResource("10_efxa6")
+
+[node name="FrecciaDx" type="Sprite3D" parent="TutorialSwipe"]
+transform = Transform3D(1.19798, 0, 0, 0, 1.19798, 0, 0, 0, 1.19798, 1.18999, 0, 0)
+billboard = 1
+texture = ExtResource("11_dg77c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSwipe"]
+libraries = {
+&"": SubResource("AnimationLibrary_yaehf")
+}
+
+[node name="TutorialJump" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.57901, 0.705592)
+visible = false
+script = ExtResource("9_dg77c")
+
+[node name="Sprite3D" type="Sprite3D" parent="TutorialJump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.23, 0)
+billboard = 1
+texture = ExtResource("9_kek77")
+
+[node name="FrecciaUp" type="Sprite3D" parent="TutorialJump"]
+billboard = 2
+texture = ExtResource("13_ycdy4")
+
+[node name="UI" parent="." instance=ExtResource("14_w48qg")]

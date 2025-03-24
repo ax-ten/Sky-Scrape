@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvlopeo5xfcie"]
+
+[ext_resource type="PackedScene" uid="uid://dkqmb0cq1akfx" path="res://addons/mesh_adjacency_inspector/spin_texture_box.tscn" id="1_8pj5r"]
+[ext_resource type="Script" uid="uid://qxfbtnp0repl" path="res://addons/mesh_adjacency_inspector/mesh_weight_selector.gd" id="1_trmxc"]
+
+[node name="MeshWeightSelector" type="Panel"]
+custom_minimum_size = Vector2(75, 85)
+offset_right = 75.0
+offset_bottom = 89.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_trmxc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 87.0
+
+[node name="Preview" parent="VBoxContainer" instance=ExtResource("1_8pj5r")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30.14)
+layout_mode = 2
+
+[node name="Weight" type="LineEdit" parent="VBoxContainer/Control"]
+layout_mode = 2
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 70.5625
+offset_bottom = 29.0
+text = "1.0"
+alignment = 2
+max_length = 4
+emoji_menu_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Control"]
+modulate = Color(0.678944, 0.678944, 0.678944, 1)
+layout_mode = 2
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 26.0
+offset_bottom = 24.0
+text = "W:"
+
+[connection signal="index_changed" from="VBoxContainer/Preview" to="." method="_on_index_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Control/Weight" to="." method="_on_weight_submitted"]
