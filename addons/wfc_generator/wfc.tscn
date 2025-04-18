@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://xcg7o2fdfody"]
 
-[ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://PalazzoMeshLibrary.tres" id="1_6evc7"]
+[ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Assets/Nodes/Palazzo/PalazzoMeshLibrary.tres" id="1_6evc7"]
 [ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="1_pamxc"]
 [ext_resource type="Script" uid="uid://c8d8674bs8nmm" path="res://addons/wfc_generator/mesh_adjacency_configuration.gd" id="3_6evc7"]
 
