@@ -7,21 +7,38 @@ var rule: TiledAdjacencyRule
 
 func setup(adj_rule: TiledAdjacencyRule):
 	rule = adj_rule
-	
-	# clear children
+
+#region clear children
 	for n in get_children():
 		remove_child(n)
 		n.queue_free()
+#endregion
+	
+#region Weight input
+	var weight_box := HBoxContainer.new()
+	var weight_label := Label.new()
+	var weight_number := SpinBox.new()
+	weight_label.text = "Weight"
+	weight_number.min_value = 0.0
+	weight_number.step = 1.0
+	
+	add_child(weight_box)
+	weight_box.add_child(weight_label)
+	weight_box.add_child(weight_number)
+#endregion
 		
 	for dir in rule.DIRECTIONS:
 		var line := HBoxContainer.new()
 		add_child(line)
-		
+
+#region direction label
 		var label = Label.new()
 		label.text = dir
-		label.custom_minimum_size = Vector2(50,0)
+		label.custom_minimum_size = Vector2(55,0)
 		line.add_child(label)
-		
+#endregion
+
+#region scrollbox
 		var scrollbox := ScrollContainer.new()
 		scrollbox.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 		scrollbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -29,43 +46,45 @@ func setup(adj_rule: TiledAdjacencyRule):
 		
 		var hbox := HBoxContainer.new()
 		scrollbox.add_child(hbox)
+#endregion
 
-		# Carica da rule
-		if rule.get(dir):
-			#print("DEBUG", str(rule.get(dir)) )
-			var direction_dict: Dictionary = rule.get(dir) 
-			for mesh_id in direction_dict:
-				var weight = direction_dict[mesh_id]
-				instantiate_mesh_selector(dir, hbox, mesh_id, weight)
+#region load rule
+		for mesh_id in rule.get(dir):
+			instantiate_mesh_selector(dir, hbox, mesh_id)
+#endregion
 
-		# Bottone +
+#region add + button
 		var plus = Button.new()
 		plus.text = "+"
 		plus.pressed.connect(func():
-			instantiate_mesh_selector(dir,hbox,-1,1)
+			instantiate_mesh_selector(dir,hbox,-1)
 			hbox.move_child(plus, hbox.get_child_count() - 1)
 			#Scrolla alla fine del hbox
-			await get_tree().process_frame  
-			scrollbox.scroll_horizontal = 6000#scrollbox.get_h_scroll_bar().max_value
+			#await get_tree().process_frame  
+			scrollbox.scroll_horizontal = scrollbox.get_h_scroll_bar().max_value
 		)
 		hbox.add_child(plus)
+#endregion
 
 
-func instantiate_mesh_selector(dir: StringName, hbox:HBoxContainer, id:int, weight:float) -> MeshWeightSelector:
-	# Aggiungi un nuovo nodo a hbox, assegnando id e w specificati
-	var mws = MeshWeightSelector.create_new(id, weight) as MeshWeightSelector
-	hbox.add_child(mws)
+func instantiate_mesh_selector(dir: StringName, hbox:HBoxContainer, mesh_id:int) -> MeshSelector:
+	# Aggiungi un nuovo nodo a hbox, assegnando id  specificato
+	var ms = MeshSelector.create_new(mesh_id) as MeshSelector
+	hbox.add_child(ms)
 	
-	# quando vengono modificati i parametri del MWS
-	mws.on_parameters_changed.connect( func(i,w):
-		# Svuota la regola in quella direzione e riempila coi dati dei children attuali
-		rule.set(dir, {})
-		for s in hbox.get_children():
-			if s is Button:
-				continue
-			
-			#print("[DEBUG] dir: ", dir ," id: ",s.mesh_id, "   w:",  -s.weight)
-			rule.update(dir, s.mesh_id, s.weight)
-		rule.emit_changed()
+	# quando vengono modificati i parametri del ms
+	ms.on_parameters_changed.connect( 
+		func(i):
+			# Svuota la regola in quella direzione e riempila coi dati dei children attuali
+			#TODO SI PUÒ SCRIVERE MEGLIO
+			rule.clear(dir)
+			print(rule.get(dir))
+			for s in hbox.get_children():
+				if s is Button:
+					continue
+				
+				#print("[DEBUG] dir: ", dir ," id: ",s.mesh_id)
+				rule._append(dir, s.mesh_id)
+			rule.emit_changed()
 	)
-	return mws
+	return ms

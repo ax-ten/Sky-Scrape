@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://brcxm0pfp5j6v"]
+[gd_scene load_steps=32 format=3 uid="uid://brcxm0pfp5j6v"]
 
 [ext_resource type="Script" uid="uid://1h70dkdegyle" path="res://Assets/Scripts/camera.gd" id="1_uq7jr"]
 [ext_resource type="Script" uid="uid://cis143jvnus1a" path="res://Assets/Scripts/spawner.gd" id="2_ltoj3"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://bk26ugv40ivho" path="res://Assets/PezziPalazzo/laterale.tscn" id="7_nb11o"]
 [ext_resource type="PackedScene" uid="uid://cyvvixy3yxk1g" path="res://addons/wfc_generator/wfc_grid_map.tscn" id="8_dxo86"]
 [ext_resource type="Script" uid="uid://bcbrgsrsbab2j" path="res://Assets/Scripts/item_spawner.gd" id="8_xcy2v"]
-[ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="9_a8up6"]
 [ext_resource type="PackedScene" uid="uid://c7w1n7ieg7h40" path="res://Assets/Nodes/Utils/secchio di vernice.tscn" id="9_dxo86"]
 [ext_resource type="Script" uid="uid://c6xomc08ollxr" path="res://Assets/Scripts/tutorial.gd" id="10_a8up6"]
 [ext_resource type="Texture2D" uid="uid://gwsbkptyhf04" path="res://Assets/Icons/manotutorial.png" id="11_e0qyk"]
@@ -156,10 +155,7 @@ transform = Transform3D(-7.54979e-08, 1.13999e-14, 1, -1.50996e-07, -1, -1.69407
 data = {
 "cells": PackedInt32Array(0, 0, 2, 0, 1, 2, 0, 2, 5, 0, 3, 0, 0, 4, 29, 0, 5, 24, 65536, 0, 12, 65536, 1, 12, 65536, 2, 9, 65536, 3, 7, 65536, 4, 19, 65536, 5, 11, 1, 0, 29, 1, 1, 24, 1, 2, 0, 1, 3, 5, 1, 4, 22, 1, 5, 24, 65537, 0, 10, 65537, 1, 10, 65537, 2, 10, 65537, 3, 13, 65537, 4, 20, 65537, 5, 9, 2, 0, 2, 2, 1, 5, 2, 2, 24, 2, 3, 29, 2, 4, 2, 2, 5, 2, 65538, 0, 13, 65538, 1, 13, 65538, 2, 8, 65538, 3, 8, 65538, 4, 9, 65538, 5, 13, 3, 0, 5, 3, 1, 22, 3, 2, 2, 3, 3, 0, 3, 4, 29, 3, 5, 5, 65539, 0, 21, 65539, 1, 9, 65539, 2, 13, 65539, 3, 9, 65539, 4, 19, 65539, 5, 19, 4, 0, 24, 4, 1, 24, 4, 2, 22, 4, 3, 29, 4, 4, 1, 4, 5, 5, 65540, 0, 9, 65540, 1, 21, 65540, 2, 12, 65540, 3, 7, 65540, 4, 7, 65540, 5, 21, 5, 0, 1, 5, 1, 1, 5, 2, 1, 5, 3, 2, 5, 4, 24, 5, 5, 1, 65541, 0, 12, 65541, 1, 9, 65541, 2, 21, 65541, 3, 7, 65541, 4, 7, 65541, 5, 7)
 }
-script = ExtResource("9_a8up6")
-x = 10
-y = 10
-adjacency_config = null
+propagation_direction = null
 
 [node name="ItemSpawner" type="Node3D" parent="." groups=["ItemSpawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.279595, -22.0263)

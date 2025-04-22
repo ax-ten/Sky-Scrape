@@ -2,157 +2,213 @@
 extends GridMap
 class_name WFCGridMap
 
-# Direzioni standard in 3D (non etichettate)
-const DIRECTIONS = [
-	Vector3i(0, 0, -1),   # +Z
-	Vector3i(0, 0, 1),   # -Z
-	Vector3i(0, 1, 0),   # +Y
-	Vector3i(0, -1, 0),  # -Y
-	Vector3i(1, 0, 0),   # +X
-	Vector3i(-1, 0, 0),  # -X
-]
+const grid_from: Vector3i = Vector3i.ZERO
+@export var grid_to: Vector3i = Vector3i(10, 2, 10)
+@export_enum("X+",  "X-", "Y+", "Y-", "Z+", "Z-") var propagation_direction = "+Z"
 
-@export var x : int = 10
-@export var y : int = 10
+var possibilities: Dictionary = {}
+var collapsed: Dictionary = {}
+var frontier := Set.new()
 
-var propagation_queue: Array[Vector3i] = []
-var propagated_positions: Dictionary = {}
+@export_category("Debug Tools")
+var debug : Label
+@export_tool_button("Generate all")
+var ga : Callable = func():
+			_generate_all()
 
-
-@export_tool_button("Genera")
-var g : Callable = func():
-	generate(Vector3.ZERO,Vector3(x,1,y))
-
-@export_tool_button("Clear")
-var c : Callable = func():
+@export_tool_button("Propagate once")
+var sg : Callable = func():
+			step_generation()
+			
+@export_tool_button("Clear all")
+var clear_grid: Callable = func():
 	clear()
-
-@export var adjacency_config: MeshAdjacencyConfiguration
-
-# Mappa delle possibilità per ogni cella
-# ad ogni posizione è collegato l'array di mesh_id possibili
-var possibilities : Dictionary[Vector3i, PackedInt32Array]= {}
-
-func _get_configuration_warnings():
-	if !mesh_library:
-		return ["Associa una MeshLibrary a questo nodo"]
-	elif adjacency_config.is_empty():
-		return ['Configura i collegamenti delle tessere']
-	else:
-		return []
+	possibilities.clear()
+	collapsed.clear()
+	frontier.clear()
+	debug = null
 
 
-func generate(start: Vector3i, end: Vector3i) -> void:
-	var from = Vector3(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z))
-	var   to = Vector3(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z))
+@export_category("Adjacency configurator")
+@export var config: MeshAdjacencyConfiguration
 
-	if adjacency_config == null:
-		push_error("Non è caricata alcuna Configurazione di Adiacenza")
-		return
+func _process(delta):
+	if Engine.is_editor_hint():
+		_update_debug_label()
+
+var grid_map_editor_plugin: GridMapEditorPlugin = null
+func _enter_tree():
+	for child in get_tree().get_root().get_children():
+		if child is GridMapEditorPlugin:
+			grid_map_editor_plugin = child
+			break
+
+	if grid_map_editor_plugin:
+		print("GridMapEditorPlugin trovato!")
+
+func _update_debug_label():
+	if debug == null:
+		print("debug assegnato a viewport")
+		debug = Label.new()
+		EditorInterface.get_editor_viewport_3d().add_child(debug)
+		
+	#if not debug.get_parent().is_class("Viewport"):
+	#get_viewport().add_child(debug)
+		#EditorInterface.get_editor_viewport_2d().add_child(debug)
 	
-	print("Creo la matrice di possibilità")
-	possibilities = superpositions(from, to)
+	var info := []
+	info.append("Frontier size: %d" % frontier.size())
+	#var selection := EditorInterface.
+	#if selection and selection.size() > 0:
+		#var pos = selection[0]
+		#info.append("Selected: %s" % pos)
+		#var opts = possibilities.get(pos, [])
+		#info.append("Options: %s" % str(opts))
+		#info.append("Entropy: %.2f" % shannon_entropy(opts))
+	#else:
+		#info.append("Selected: none")
+	debug.text = "\n".join(info)
 
-	print("Propago")
-	_propagate()
 
-	for pos in possibilities:
-		var options = possibilities[pos]
-		if options.size() == 0:
-			continue
-		var chosen = _pick_weighted_random(pos)
-		set_cell_item(pos, chosen)
-	print("impostati tutti i cell items")
+func _ready():
+	# Editor button compatibility
+	if Engine.is_editor_hint():
+		return
+	possibilities = superpositions(grid_from, grid_to)
+	var start_pos = get_starting_position(propagation_direction)
+	collapse_cell(start_pos)
+	update_frontier()
 
+func get_starting_position(dir: String) -> Vector3i:
+	match dir:
+		"X+": return Vector3i(grid_to.x, grid_from.y, (grid_from.z + grid_to.z) / 2)
+		"X-": return Vector3i(grid_from.x, grid_from.y, (grid_from.z + grid_to.z) / 2)
+		"Z+": return Vector3i((grid_from.x + grid_to.x) / 2, grid_from.y, grid_to.z)
+		"Z-": return Vector3i((grid_from.x + grid_to.x) / 2, grid_from.y, grid_from.z)
+		"Y+": return Vector3i((grid_from.x + grid_to.x) / 2, grid_to.y, (grid_from.z + grid_to.z) / 2)
+		"Y-": return Vector3i((grid_from.x + grid_to.x) / 2, grid_from.y, (grid_from.z + grid_to.z) / 2)
+		_: return Vector3i((grid_from.x + grid_to.x) / 2, grid_from.y, (grid_from.z + grid_to.z) / 2)
 
 func superpositions(from: Vector3, to: Vector3) -> Dictionary:
 	var mesh_list := mesh_library.get_item_list().duplicate()
 	mesh_list.append(-1) # Anche una mesh vuota è valida
-	var grid : Dictionary[Vector3i, PackedInt32Array] 
+	var grid : Dictionary = {}
 	for x in range(from.x, to.x + 1):
 		for y in range(from.y, to.y + 1):
 			for z in range(from.z, to.z + 1):
-				#var pos = Vector3i(x, y, z)
-				grid[Vector3i(x, y, z)] = mesh_list
+				grid[Vector3i(x, y, z)] = PackedInt32Array(mesh_list)
 	return grid
 
+func collapse_cell(pos: Vector3i):
+	if collapsed.has(pos):
+		return
+	var options := possibilities.get(pos, PackedInt32Array())
+	if options.is_empty():
+		push_error("Nessuna possibilità per la cella %s" % pos)
+		return
+	var mesh_id := weighted_random(options)
+	set_cell_item(pos, mesh_id)
+	collapsed[pos] = mesh_id
+	possibilities.erase(pos)
+	propagate_constraints(pos, mesh_id)
 
-# I haven’t seen this written anywhere else, but my intuition says
- # that following this minimal entropy heuristic probably results in
- # fewer contradictions than randomly choosing squares to collapse.
-#func lowest_entropy_cell()
+func step_generation():
+	if frontier.is_empty():
+		print("Generazione completata.")
+		return
+	var min_entropy := INF
+	var best_pos = null
+	for pos in frontier.keys():
+		var opts = possibilities.get(pos, [])
+		if opts.is_empty():
+			continue
+		var entropy = shannon_entropy(opts)
+		if entropy < min_entropy:
+			min_entropy = entropy
+			best_pos = pos
+	if best_pos != null:
+		collapse_cell(best_pos)
+		update_frontier()
 
-func _propagate() -> void:
-	var changed = true
-	while changed:
-		changed = false
-		for pos in possibilities.keys():
-			for dir in DIRECTIONS:
-				var neighbor = pos + dir
-				#se il neighbor non è nella griglia
-				if not possibilities.has(neighbor):
-					continue
+func update_frontier():
+	frontier.clear()
+	for pos in collapsed.keys():
+		for dir in get_directions():
+			var n = pos + dir.vector
+			if not collapsed.has(n) and possibilities.has(n):
+				frontier.add(n) 
 
-				var possible_here = possibilities[pos]
-				if possible_here.is_empty():
-					continue
+func propagate_constraints(origin: Vector3i, mesh_id: int):
+	var rule: TiledAdjacencyRule = config.rules.get(mesh_id)
+	if rule == null:
+		return
+	for dir in get_directions():
+		var neighbor = origin + dir.vector
+		if not possibilities.has(neighbor):
+			continue
+		var allowed := rule.get(dir.name)
+		var current = possibilities[neighbor]
+		var filtered := PackedInt32Array()
+		for id in current:
+			if allowed.has(id):
+				filtered.append(id)
+		if filtered.size() < current.size():
+			possibilities[neighbor] = filtered
+			frontier.add(neighbor)
 
-				var possible_there = possibilities[neighbor]
-
-				#print("here",possible_here, " there", possible_there)
-				var filtered: Array = []
-
-				for id in possible_there:
-					var compatible = false
-					for my_id in possible_here:
-						if my_id in adjacency_config.get_compatible(id, -dir):
-							compatible = true
-							break
-					if compatible:
-						filtered.append(id)
-
-				if filtered.size() < possible_there.size():
-					possibilities[neighbor] = PackedInt32Array(filtered)
-					changed = true
-
-func _pick_weighted_random(pos: Vector3i) -> int:
-	var candidates := possibilities.get(pos, PackedInt32Array())
-	if candidates.is_empty():
-		return -1
-
-	var weights := {}
+func weighted_random(options: PackedInt32Array) -> int:
 	var total_weight := 0.0
+	var weights := []
+	for id in options:
+		var w : float = config.rules.get(id).weight
+		weights.append(w)
+		total_weight += w
+	var r = randf() * total_weight
+	for i in options.size():
+		r -= weights[i]
+		if r <= 0.0:
+			return options[i]
+	return options[-1]
 
-	for candidate_id in candidates:
-		var candidate_weight := 0.0
+func shannon_entropy(options: PackedInt32Array) -> float:
+	var total := 0.0
+	for id in options:
+		var rule: TiledAdjacencyRule = config.rules.get(id)
+		total += rule.weight if rule != null else 1.0
+	var sum_log := 0.0
+	for id in options:
+		var rule: TiledAdjacencyRule = config.rules.get(id)
+		var w := rule.weight if rule != null else 1.0
+		sum_log += w * log(w)
+	return log(total) - (sum_log / total)
 
-		for dir in DIRECTIONS:
-			var neighbor_pos : Vector3i = pos + dir
-			if not possibilities.has(neighbor_pos):
-				continue
+func get_directions() -> Array:
+	return [
+		{name = "+X", vector = Vector3i(1, 0, 0)},
+		{name = "-X", vector = Vector3i(-1, 0, 0)},
+		{name = "+Z", vector = Vector3i(0, 0, 1)},
+		{name = "-Z", vector = Vector3i(0, 0, -1)},
+		{name = "+Y", vector = Vector3i(0, 1, 0)},
+		{name = "-Y", vector = Vector3i(0, -1, 0)},
+	]
 
-			var neighbor_poss := possibilities[neighbor_pos]
-			if neighbor_poss.is_empty():
-				continue
 
-			# Questo ID deve essere compatibile con almeno uno dei vicini
-			var compat_dict = adjacency_config.get_weighted_compatible(candidate_id, dir)
-			for neighbor_id in neighbor_poss:
-				if compat_dict.has(neighbor_id):
-					candidate_weight += float(compat_dict[neighbor_id])
+func _generate_all():
+	possibilities = superpositions(grid_from, grid_to)
+	collapsed.clear()
+	var start_pos = get_starting_position(propagation_direction)
+	collapse_cell(start_pos)
+	update_frontier()
+	while not frontier.is_empty():
+		step_generation()
 
-		if candidate_weight > 0:
-			weights[candidate_id] = candidate_weight
-			total_weight += candidate_weight
 
-	if weights.is_empty():
-		return candidates[randi() % candidates.size()]  # fallback
-
-	# Scelta pesata
-	var rand_val := randf() * total_weight
-	for id in weights.keys():
-		rand_val -= weights[id]
-		if rand_val <= 0:
-			return id
-
-	return weights.keys()[0]  # fallback
+func _get_configuration_warnings():
+	if !mesh_library:
+		return ["Associa una MeshLibrary a questo nodo"]
+	elif !config:
+		return ["Associa una MeshConfiguration a questo nodo"]
+	elif config.is_empty():
+		return ['Configura i collegamenti delle tessere']
+	else:
+		return []

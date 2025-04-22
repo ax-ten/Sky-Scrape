@@ -1,80 +1,81 @@
-@tool
+@tool # adjacency_rule.gd
 extends Resource
 class_name TiledAdjacencyRule
 
 # Dizionario [id_mesh, weight]
-# dove weight è la probabilità relativa che un blocco venga piazzato
-@export var X_pos : Dictionary
-@export var X_neg : Dictionary
-@export var Y_pos : Dictionary
-@export var Y_neg : Dictionary
-@export var Z_pos : Dictionary
-@export var Z_neg : Dictionary
-const DIRECTIONS = ["X+", "X-", "Y+", "Y-", "Z+", "Z-"]
-const EMPTY = {-1: 1.0}
-#const directions = ["X_pos", "X_neg", "Y_pos", "Y_neg", "Z_pos", "Z_neg"]
+# dove weight è la probabilità relativa che il blocco associato a questa regola sia piazzato
+var weight : float = 1.0
+const AIR : PackedInt32Array = [-1]
+const EMPTY : PackedInt32Array = []
+const DIRECTIONS = [&"X+",  &"X-", &"Y+", &"Y-", &"Z+", &"Z-"]
+var ADJACENCIES : Dictionary[StringName, PackedInt32Array]
 
 
-func _init() -> void:
+func _init() -> void: 
+	connect(&"changed", save)
 	for dir in DIRECTIONS:
-		_set(dir, EMPTY)
-	changed.connect(save)
+		ADJACENCIES[dir] = EMPTY
 
 
-func update(property: StringName, mesh_id:int, weight:float):
-	match property:
-		DIRECTIONS[0]: X_pos[mesh_id]=weight
-		DIRECTIONS[1]: X_neg[mesh_id]=weight
-		DIRECTIONS[2]: Y_pos[mesh_id]=weight
-		DIRECTIONS[3]: Y_neg[mesh_id]=weight
-		DIRECTIONS[4]: Z_pos[mesh_id]=weight
-		DIRECTIONS[5]: Z_neg[mesh_id]=weight
-	save()
-	return null
-
-func ids_in_direction(direction:StringName):
-	match direction:
-		DIRECTIONS[0]: return X_pos.keys()
-		DIRECTIONS[1]: return X_neg.keys()
-		DIRECTIONS[2]: return Y_pos.keys()
-		DIRECTIONS[3]: return Y_neg.keys()
-		DIRECTIONS[4]: return Z_pos.keys()
-		DIRECTIONS[5]: return Z_neg.keys()
-	return null
-
-func _get(property: StringName) -> Dictionary:
-	match property:
-		DIRECTIONS[0]: return X_pos
-		DIRECTIONS[1]: return X_neg
-		DIRECTIONS[2]: return Y_pos
-		DIRECTIONS[3]: return Y_neg
-		DIRECTIONS[4]: return Z_pos
-		DIRECTIONS[5]: return Z_neg
-	return {}
+func _append(direction: StringName, mesh_id:int):
+	ADJACENCIES[direction].append(mesh_id)
+	emit_changed()
 
 
-func _set(property: StringName, value):
-	if value is Dictionary:
-		value as Dictionary[int,float]
-	match property:
-		DIRECTIONS[0]: X_pos = value
-		DIRECTIONS[1]: X_neg = value
-		DIRECTIONS[2]: Y_pos = value
-		DIRECTIONS[3]: Y_neg = value
-		DIRECTIONS[4]: Z_pos = value
-		DIRECTIONS[5]: Z_neg = value
-	save()
+func _remove(direction: StringName, id_to_remove:int) -> bool:
+	if id_to_remove not in ADJACENCIES[direction]:
+		return false
+	
+	var filtered : PackedInt32Array = []
+	for v in ADJACENCIES[direction]:
+		if v != id_to_remove:
+			filtered.append(v)
+	_set(direction, filtered)
+	return true
+	
+
+func clear(direction: StringName) -> bool:
+	if direction not in DIRECTIONS:
+		return false
+	ADJACENCIES[direction] = EMPTY
+	return true
+
+func _set(direction: StringName, values: Variant) -> bool:
+	if values is not PackedInt32Array:
+		return false
+	ADJACENCIES[direction].clear()
+	ADJACENCIES[direction].append_array(values)
+	emit_changed()
+	return true
+	
+
+func _get(direction: StringName):
+	if not ADJACENCIES.has(direction):
+		return null
+	return ADJACENCIES[direction]
+	
+
+func _has(direction: StringName, mesh_id) -> bool:
+	return mesh_id in _get(direction)
+
+
+func save() -> bool:
+	if not resource_path:
+		return false
+	ResourceSaver.save(self, resource_path)
 	return true
 
 
-func save() -> void:
-	if resource_path:
-		ResourceSaver.save(self, resource_path)
+func  is_empty() -> bool:
+	for dir in DIRECTIONS:
+		if ADJACENCIES[dir] != EMPTY:
+			return true
+	return false
 
 
 func _to_string() -> String:
 	var strin = ''
 	for dir in DIRECTIONS:
-		if _get(dir) != EMPTY:
+		if _get(dir) != EMPTY or _get(dir) != AIR:
 			strin += dir +":"+ str(_get(dir))+ "\n"
 	return strin

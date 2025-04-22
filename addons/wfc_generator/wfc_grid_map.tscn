@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyvvixy3yxk1g"]
+[gd_scene load_steps=8 format=3 uid="uid://cyvvixy3yxk1g"]
 
 [ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Assets/Nodes/Palazzo/PalazzoMeshLibrary.tres" id="1_7ymw8"]
-[ext_resource type="Script" uid="uid://mf3sbiqfu46r" path="res://addons/wfc_generator/wfc_old.gd" id="2_mni7u"]
-[ext_resource type="Resource" uid="uid://btryi6ntoq0fr" path="res://Assets/Rules/AdjacencyConfiguration.tres" id="3_mni7u"]
+[ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="2_7ymw8"]
+[ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/mesh_adjacency_inspector/adjacency_rule.gd" id="3_7ymw8"]
+[ext_resource type="Script" uid="uid://c8d8674bs8nmm" path="res://addons/wfc_generator/mesh_adjacency_configuration.gd" id="4_ecow7"]
 [ext_resource type="PackedScene" uid="uid://bk26ugv40ivho" path="res://Assets/PezziPalazzo/laterale.tscn" id="5_nk8lf"]
+
+[sub_resource type="Resource" id="Resource_7ymw8"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_ecow7"]
+script = ExtResource("4_ecow7")
+rules = Dictionary[int, ExtResource("3_7ymw8")]({
+1: SubResource("Resource_7ymw8")
+})
+metadata/_custom_type_script = "uid://c8d8674bs8nmm"
 
 [node name="WFCGridMap" type="GridMap"]
 transform = Transform3D(-1.31134e-07, 1.14641e-14, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.31134e-07, 0, 0, 0)
@@ -13,15 +25,17 @@ cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 cell_scale = 0.2
-data = {
-"cells": PackedInt32Array(0, 0, 5, 0, 1, 0, 0, 2, 0, 0, 3, 24, 0, 4, 2, 0, 5, 22, 65536, 0, 8, 65536, 1, 9, 65536, 2, 11, 65536, 3, 21, 65536, 4, 13, 65536, 5, 8, 1, 0, 0, 1, 1, 22, 1, 2, 2, 1, 3, 24, 1, 4, 24, 1, 5, 22, 65537, 0, 9, 65537, 1, 7, 65537, 2, 14, 65537, 3, 9, 65537, 4, 12, 65537, 5, 19, 2, 0, 22, 2, 1, 24, 2, 2, 24, 2, 3, 24, 2, 4, 24, 2, 5, 5, 65538, 0, 14, 65538, 1, 14, 65538, 2, 20, 65538, 3, 11, 65538, 4, 11, 65538, 5, 9, 3, 0, 24, 3, 1, 2, 3, 2, 2, 3, 3, 0, 3, 4, 22, 3, 5, 22, 65539, 0, 13, 65539, 1, 20, 65539, 2, 9, 65539, 3, 7, 65539, 4, 20, 65539, 5, 11, 4, 0, 2, 4, 1, 0, 4, 2, 0, 4, 3, 24, 4, 4, 2, 4, 5, 0, 65540, 0, 19, 65540, 1, 11, 65540, 2, 21, 65540, 3, 8, 65540, 4, 14, 65540, 5, 21, 5, 0, 1, 5, 1, 24, 5, 2, 1, 5, 3, 22, 5, 4, 0, 5, 5, 1, 65541, 0, 20, 65541, 1, 8, 65541, 2, 12, 65541, 3, 9, 65541, 4, 8, 65541, 5, 12)
-}
-script = ExtResource("2_mni7u")
-x = 5
-y = 5
-adjacency_config = ExtResource("3_mni7u")
+script = ExtResource("2_7ymw8")
+grid_to = Vector3i(10, 1, 10)
+propagation_direction = "X+"
+config = SubResource("Resource_ecow7")
 metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
 metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="DebugInfo" type="Label" parent="."]
+offset_right = 187.0
+offset_bottom = 79.0
+text = "Frontier size: 0"
 
 [node name="Laterali2" type="Node3D" parent="."]
 transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -5.37651)

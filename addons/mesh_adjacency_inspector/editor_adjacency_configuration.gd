@@ -77,10 +77,11 @@ func _update_rule_view() -> void:
 					#print("risorsa aggiornata\n " + str(rule))
 			#)
 	)
-	picker.resource_changed.connect( func(rule:TiledAdjacencyRule):
-		config_object.rules[selected_id] = rule
-		rule.emit_changed()
-		)
+	picker.resource_changed.connect( 
+		func (rule:TiledAdjacencyRule):
+			config_object.rules[selected_id] = rule
+			rule.emit_changed()
+	)
 		
 	rule_view.add_child(picker)
 	rule_view.add_child(rule_editor)
