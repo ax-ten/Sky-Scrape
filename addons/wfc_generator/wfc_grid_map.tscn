@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyvvixy3yxk1g"]
+[gd_scene load_steps=16 format=3 uid="uid://cyvvixy3yxk1g"]
 
 [ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Assets/Nodes/Palazzo/PalazzoMeshLibrary.tres" id="1_7ymw8"]
 [ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="2_7ymw8"]
@@ -10,10 +10,50 @@
 script = ExtResource("3_7ymw8")
 metadata/_custom_type_script = "uid://byh1hh2kei7fd"
 
+[sub_resource type="Resource" id="Resource_45qv0"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_nk8lf"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_pchsm"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_y7q3x"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_hkujn"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_o0wqn"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_87ova"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
+[sub_resource type="Resource" id="Resource_jsr7y"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
+
 [sub_resource type="Resource" id="Resource_ecow7"]
 script = ExtResource("4_ecow7")
 rules = Dictionary[int, ExtResource("3_7ymw8")]({
-1: SubResource("Resource_7ymw8")
+1: SubResource("Resource_7ymw8"),
+7: SubResource("Resource_o0wqn"),
+8: SubResource("Resource_45qv0"),
+13: SubResource("Resource_jsr7y"),
+14: SubResource("Resource_nk8lf"),
+15: SubResource("Resource_pchsm"),
+19: SubResource("Resource_87ova"),
+20: SubResource("Resource_y7q3x"),
+21: SubResource("Resource_hkujn")
 })
 metadata/_custom_type_script = "uid://c8d8674bs8nmm"
 

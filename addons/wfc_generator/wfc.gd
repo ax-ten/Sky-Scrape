@@ -4,7 +4,7 @@ class_name WFCGridMap
 
 const grid_from: Vector3i = Vector3i.ZERO
 @export var grid_to: Vector3i = Vector3i(10, 2, 10)
-@export_enum("X+",  "X-", "Y+", "Y-", "Z+", "Z-") var propagation_direction = "+Z"
+@export_enum("X+",  "X-", "Y+", "Y-", "Z+", "Z-") var propagation_direction = "Z+"
 
 var possibilities: Dictionary = {}
 var collapsed: Dictionary = {}

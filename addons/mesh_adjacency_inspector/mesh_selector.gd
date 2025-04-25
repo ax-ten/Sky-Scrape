@@ -4,7 +4,6 @@ class_name MeshSelector
 
 var mesh_id = -1
 var min = -1
-signal on_parameters_changed(mesh_id)
 @export var preview : TextureRect
 var right_click_pending = false
 @export var buttonup : TextureButton
@@ -13,6 +12,7 @@ var right_click_pending = false
 @export var empty :Texture2D
 @onready var max : int = meshlibrary.get_item_list().size() -1
 
+signal on_parameters_changed(mesh_id)
 signal index_changed(index: int)
 
 func _set(property: StringName, new_meshid: Variant) -> bool:
@@ -63,7 +63,8 @@ func _on_mouse_exited() -> void:
 	right_click_pending = false
 	
 const scene : PackedScene = preload("res://addons/mesh_adjacency_inspector/mesh_weight_selector.tscn")
-static func create_new(id:int) -> MeshSelector:
+static func create_new(id:int=-1) -> MeshSelector:
 	var instance : MeshSelector = scene.instantiate() as MeshSelector
 	instance._set("mesh_id",id)
+	instance.set_preview(id)
 	return instance

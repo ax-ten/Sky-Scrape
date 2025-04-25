@@ -9,6 +9,7 @@ const AIR : PackedInt32Array = [-1]
 const EMPTY : PackedInt32Array = []
 const DIRECTIONS = [&"X+",  &"X-", &"Y+", &"Y-", &"Z+", &"Z-"]
 var ADJACENCIES : Dictionary[StringName, PackedInt32Array]
+						# 	 Direction,  Mesh_ids
 
 
 func _init() -> void: 
@@ -41,10 +42,13 @@ func clear(direction: StringName) -> bool:
 	return true
 
 func _set(direction: StringName, values: Variant) -> bool:
-	if values is not PackedInt32Array:
+	if values is Array:
+		ADJACENCIES[direction]= PackedInt32Array(values)
+	elif values is PackedInt32Array:
+		ADJACENCIES[direction]= values
+	else:
 		return false
-	ADJACENCIES[direction].clear()
-	ADJACENCIES[direction].append_array(values)
+		
 	emit_changed()
 	return true
 	
@@ -63,6 +67,7 @@ func save() -> bool:
 	if not resource_path:
 		return false
 	ResourceSaver.save(self, resource_path)
+	#print('[DEBUG] ', "Risorsa salvata")
 	return true
 
 

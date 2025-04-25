@@ -7,12 +7,7 @@ var rule: TiledAdjacencyRule
 
 func setup(adj_rule: TiledAdjacencyRule):
 	rule = adj_rule
-
-#region clear children
-	for n in get_children():
-		remove_child(n)
-		n.queue_free()
-#endregion
+	clear()
 	
 #region Weight input
 	var weight_box := HBoxContainer.new()
@@ -62,8 +57,16 @@ func setup(adj_rule: TiledAdjacencyRule):
 			#Scrolla alla fine del hbox
 			#await get_tree().process_frame  
 			scrollbox.scroll_horizontal = scrollbox.get_h_scroll_bar().max_value
+			rule.emit_changed()
 		)
 		hbox.add_child(plus)
+#endregion
+
+func clear():
+#region clear children
+	for n in get_children():
+		remove_child(n)
+		n.queue_free()
 #endregion
 
 
@@ -77,14 +80,14 @@ func instantiate_mesh_selector(dir: StringName, hbox:HBoxContainer, mesh_id:int)
 		func(i):
 			# Svuota la regola in quella direzione e riempila coi dati dei children attuali
 			#TODO SI PUÒ SCRIVERE MEGLIO
-			rule.clear(dir)
-			print(rule.get(dir))
+			#print("Aggiorno la direzione ",dir, " della mesh ",mesh_id)
+			var ids_in_dir := []
+			#print(rule.get(dir))
 			for s in hbox.get_children():
-				if s is Button:
-					continue
-				
-				#print("[DEBUG] dir: ", dir ," id: ",s.mesh_id)
-				rule._append(dir, s.mesh_id)
-			rule.emit_changed()
+				if s is Button:	continue # ignora il pulsante +
+				ids_in_dir.append(s.mesh_id)
+			rule.set(dir, ids_in_dir)
+			
+			#rule.emit_changed()
 	)
 	return ms
