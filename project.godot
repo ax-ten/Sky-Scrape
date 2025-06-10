@@ -15,6 +15,10 @@ run/main_scene="uid://brcxm0pfp5j6v"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Debugger="*res://Assets/Scripts/debug.gd"
+
 [display]
 
 window/size/viewport_width=512
@@ -32,6 +36,7 @@ enabled=PackedStringArray("res://addons/mesh_adjacency_inspector/plugin.cfg")
 Player=""
 ItemSpawner=""
 UI=""
+Debug=""
 
 [input]
 

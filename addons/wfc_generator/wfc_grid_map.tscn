@@ -1,63 +1,34 @@
-[gd_scene load_steps=16 format=3 uid="uid://cyvvixy3yxk1g"]
+[gd_scene load_steps=8 format=3 uid="uid://cyvvixy3yxk1g"]
 
 [ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Assets/Nodes/Palazzo/PalazzoMeshLibrary.tres" id="1_7ymw8"]
 [ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/wfc_generator/wfc.gd" id="2_7ymw8"]
 [ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/mesh_adjacency_inspector/adjacency_rule.gd" id="3_7ymw8"]
+[ext_resource type="Resource" uid="uid://bqi7jpxbnhtl" path="res://Assets/Rules/Parete.tres" id="4_7ymw8"]
 [ext_resource type="Script" uid="uid://c8d8674bs8nmm" path="res://addons/wfc_generator/mesh_adjacency_configuration.gd" id="4_ecow7"]
-[ext_resource type="PackedScene" uid="uid://bk26ugv40ivho" path="res://Assets/PezziPalazzo/laterale.tscn" id="5_nk8lf"]
+
+[sub_resource type="Resource" id="Resource_mni7u"]
+script = ExtResource("3_7ymw8")
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"
 
 [sub_resource type="Resource" id="Resource_7ymw8"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_45qv0"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_nk8lf"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_pchsm"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_y7q3x"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_hkujn"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_o0wqn"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_87ova"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_jsr7y"]
-script = ExtResource("3_7ymw8")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"
-
-[sub_resource type="Resource" id="Resource_ecow7"]
 script = ExtResource("4_ecow7")
 rules = Dictionary[int, ExtResource("3_7ymw8")]({
-1: SubResource("Resource_7ymw8"),
-7: SubResource("Resource_o0wqn"),
-8: SubResource("Resource_45qv0"),
-13: SubResource("Resource_jsr7y"),
-14: SubResource("Resource_nk8lf"),
-15: SubResource("Resource_pchsm"),
-19: SubResource("Resource_87ova"),
-20: SubResource("Resource_y7q3x"),
-21: SubResource("Resource_hkujn")
+0: SubResource("Resource_mni7u"),
+7: ExtResource("4_7ymw8"),
+8: ExtResource("4_7ymw8"),
+9: ExtResource("4_7ymw8"),
+10: ExtResource("4_7ymw8"),
+11: ExtResource("4_7ymw8"),
+12: ExtResource("4_7ymw8"),
+13: ExtResource("4_7ymw8"),
+14: ExtResource("4_7ymw8"),
+19: ExtResource("4_7ymw8"),
+20: ExtResource("4_7ymw8"),
+21: ExtResource("4_7ymw8")
 })
 metadata/_custom_type_script = "uid://c8d8674bs8nmm"
 
-[node name="WFCGridMap" type="GridMap"]
+[node name="WFCGridMap" type="GridMap" groups=["Debug"]]
 transform = Transform3D(-1.31134e-07, 1.14641e-14, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.31134e-07, 0, 0, 0)
 mesh_library = ExtResource("1_7ymw8")
 cell_size = Vector3(3.4, 0.532, 3.4)
@@ -65,66 +36,44 @@ cell_center_x = false
 cell_center_y = false
 cell_center_z = false
 cell_scale = 0.2
+data = {
+"cells": PackedInt32Array(65539, 1, 13)
+}
 script = ExtResource("2_7ymw8")
-grid_to = Vector3i(10, 1, 10)
+grid_to = Vector3i(3, 1, 3)
 propagation_direction = "X+"
-config = SubResource("Resource_ecow7")
+possibilities = {
+Vector3i(0, 0, 0): null,
+Vector3i(0, 0, 1): null,
+Vector3i(0, 0, 2): null,
+Vector3i(0, 0, 3): null,
+Vector3i(0, 1, 0): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(0, 1, 1): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(0, 1, 2): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(0, 1, 3): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(1, 0, 0): null,
+Vector3i(1, 0, 1): null,
+Vector3i(1, 0, 2): null,
+Vector3i(1, 0, 3): null,
+Vector3i(1, 1, 0): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(1, 1, 1): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(1, 1, 2): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(1, 1, 3): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(2, 0, 0): null,
+Vector3i(2, 0, 1): PackedInt32Array(),
+Vector3i(2, 0, 2): null,
+Vector3i(2, 0, 3): null,
+Vector3i(2, 1, 0): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(2, 1, 1): PackedInt32Array(),
+Vector3i(2, 1, 2): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(2, 1, 3): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21),
+Vector3i(3, 0, 0): PackedInt32Array(),
+Vector3i(3, 0, 2): PackedInt32Array(),
+Vector3i(3, 0, 3): null,
+Vector3i(3, 1, 0): PackedInt32Array(),
+Vector3i(3, 1, 2): PackedInt32Array(),
+Vector3i(3, 1, 3): PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21)
+}
+config = SubResource("Resource_7ymw8")
 metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
-metadata/_editor_floor_ = Vector3(0, -1, 0)
-
-[node name="DebugInfo" type="Label" parent="."]
-offset_right = 187.0
-offset_bottom = 79.0
-text = "Frontier size: 0"
-
-[node name="Laterali2" type="Node3D" parent="."]
-transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -5.37651)
-visible = false
-
-[node name="LateraliSX" type="Node3D" parent="Laterali2"]
-transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
-
-[node name="Laterale" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
-
-[node name="Laterale2" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
-
-[node name="Laterale8" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
-
-[node name="Laterale9" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
-
-[node name="Laterale10" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
-
-[node name="Laterale11" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
-
-[node name="Laterale12" parent="Laterali2/LateraliSX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
-
-[node name="LateraliDX" type="Node3D" parent="Laterali2"]
-transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
-
-[node name="Laterale" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
-
-[node name="Laterale2" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
-
-[node name="Laterale8" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
-
-[node name="Laterale9" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
-
-[node name="Laterale10" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
-
-[node name="Laterale11" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
-
-[node name="Laterale12" parent="Laterali2/LateraliDX" instance=ExtResource("5_nk8lf")]
-transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+metadata/_editor_floor_ = Vector3(0, 1, 0)

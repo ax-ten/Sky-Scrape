@@ -39,8 +39,9 @@ gradient = SubResource("Gradient_mdtxf")
 
 [node name="MeshSelector" type="Panel" node_paths=PackedStringArray("preview", "buttonup", "buttondown")]
 custom_minimum_size = Vector2(65, 56)
-offset_right = 64.615
-offset_bottom = 55.375
+offset_top = -1.0
+offset_right = 65.0
+offset_bottom = 55.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_trmxc")
@@ -57,6 +58,7 @@ offset_right = 60.0
 offset_bottom = 54.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 
 [node name="Preview" type="TextureRect" parent="Preview"]
 texture_filter = 1
@@ -98,6 +100,7 @@ custom_minimum_size = Vector2(16, 12)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 texture_normal = SubResource("ImageTexture_r0omj")
 texture_pressed = SubResource("ImageTexture_r0omj")
 texture_hover = SubResource("ImageTexture_r0omj")
@@ -110,6 +113,7 @@ custom_minimum_size = Vector2(16, 12)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+mouse_filter = 1
 texture_normal = SubResource("ImageTexture_trmxc")
 texture_pressed = SubResource("ImageTexture_trmxc")
 texture_hover = SubResource("ImageTexture_trmxc")

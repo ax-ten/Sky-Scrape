@@ -37,6 +37,6 @@ func get_weighted_compatible(id: int, direction: Vector3i) -> PackedInt32Array:
 	
 func is_empty() -> bool :
 	for rule in rules.values():
-		if not rule.is_empty():
+		if rule and not rule.is_empty():
 			return false
 	return true

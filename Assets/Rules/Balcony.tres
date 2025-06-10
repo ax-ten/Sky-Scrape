@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="TiledAdjacencyRule" format=3 uid="uid://ca3hqlbhgve46"]
-
-[resource]
-resource_local_to_scene = PackedInt32Array(-1)
-resource_name = PackedInt32Array(-1)
-script = PackedInt32Array(-1)

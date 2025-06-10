@@ -84,3 +84,17 @@ func _to_string() -> String:
 		if _get(dir) != EMPTY or _get(dir) != AIR:
 			strin += dir +":"+ str(_get(dir))+ "\n"
 	return strin
+
+
+func duplicate(subresources: bool = false) -> Resource:
+	var copy = TiledAdjacencyRule.new()
+	copy.weight = weight
+
+	for dir in DIRECTIONS:
+		if ADJACENCIES.has(dir):
+			# Clona il PackedInt32Array per evitare riferimenti condivisi
+			copy.ADJACENCIES[dir] = PackedInt32Array(ADJACENCIES[dir])
+		else:
+			copy.ADJACENCIES[dir] = EMPTY.duplicate()
+
+	return copy

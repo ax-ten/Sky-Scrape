@@ -12,16 +12,25 @@ var right_click_pending = false
 @export var empty :Texture2D
 @onready var max : int = meshlibrary.get_item_list().size() -1
 
-signal on_parameters_changed(mesh_id)
+signal destroy()
+signal on_parameters_changed()
 signal index_changed(index: int)
 
+
 func _set(property: StringName, new_meshid: Variant) -> bool:
-	if property == "mesh_id" and new_meshid>=min and new_meshid<=max:
-		mesh_id = new_meshid
-		set_preview(mesh_id)
-		on_parameters_changed.emit(new_meshid)
+	if property == "mesh_id":
+		if new_meshid>=min and new_meshid<=max:
+			mesh_id = new_meshid
+			set_preview(mesh_id)
+			on_parameters_changed.emit()
 		return true
 	return false
+
+
+func _get_property_list():
+	return [
+		{ "name": "mesh_id", "type": TYPE_INT }
+	]
 
 
 func set_preview(mesh_id:int):
@@ -37,6 +46,7 @@ func next(): _set("mesh_id",mesh_id+1)
 func prev(): _set("mesh_id",mesh_id-1)
 func _on_index_changed(new_meshid: int) -> void:
 	_set("mesh_id", new_meshid)
+	
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -46,6 +56,7 @@ func _on_gui_input(event: InputEvent) -> void:
 					right_click_pending = true
 				elif event.is_released() and right_click_pending:
 					right_click_pending = false
+					destroy.emit()
 					call_deferred("queue_free")
 				get_viewport().set_input_as_handled()
 
@@ -59,12 +70,15 @@ func _on_gui_input(event: InputEvent) -> void:
 					prev()
 					get_viewport().set_input_as_handled()
 
+
 func _on_mouse_exited() -> void:
 	right_click_pending = false
-	
+
+
 const scene : PackedScene = preload("res://addons/mesh_adjacency_inspector/mesh_weight_selector.tscn")
-static func create_new(id:int=-1) -> MeshSelector:
+static func create_new(id:int) -> MeshSelector:
 	var instance : MeshSelector = scene.instantiate() as MeshSelector
 	instance._set("mesh_id",id)
+	instance.mesh_id = id
 	instance.set_preview(id)
 	return instance
