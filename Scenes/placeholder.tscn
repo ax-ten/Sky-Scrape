@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp1gknjhr5y74"]
+
+[ext_resource type="BoxMesh" uid="uid://eqko54vlvs0q" path="res://Assets/placceholdercube.tres" id="1_l6lyr"]
+
+[node name="placeholder" type="MeshInstance3D"]
+mesh = ExtResource("1_l6lyr")
+skeleton = NodePath("../visualizer")

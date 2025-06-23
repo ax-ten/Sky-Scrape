@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="SimpleAdjacencyConfiguration" load_steps=21 format=3 uid="uid://bt0ftnfa35xi1"]
+
+[ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/grid_generator/adjaceny_rules/simple_tiled.gd" id="1_wn5xu"]
+[ext_resource type="Resource" uid="uid://oy6b0v7jf82a" path="res://Assets/Rules/Ringhiera_Chiusa.tres" id="2_wn5xu"]
+[ext_resource type="Resource" uid="uid://c5escyplxar0c" path="res://Assets/Rules/Ringhiera_Aperta.tres" id="3_4k4w6"]
+[ext_resource type="Resource" uid="uid://wtca56svd6e4" path="res://Assets/Rules/ringhiera_dx.tres" id="4_c7lg6"]
+[ext_resource type="Resource" uid="uid://cgb1s24xfcwn" path="res://Assets/Rules/ringhiera_dx_marcapiano.tres" id="5_sto7w"]
+[ext_resource type="Resource" uid="uid://1yqd33fd0824" path="res://Assets/Rules/ringhiera_aperta_marcapiano.tres" id="6_qwjh1"]
+[ext_resource type="Resource" uid="uid://b04wsduaih4rc" path="res://Assets/Rules/ringhiera_sx.tres" id="7_jsbpb"]
+[ext_resource type="Resource" uid="uid://coq6hqhfe0lrk" path="res://Assets/Rules/ringhiera_sx_marcapiano.tres" id="8_4hygs"]
+[ext_resource type="Resource" uid="uid://dojf0r4ls0uh2" path="res://Assets/Rules/Finestra.tres" id="9_6qao5"]
+[ext_resource type="Resource" uid="uid://cisca2dagrl6j" path="res://Assets/Rules/porta.tres" id="10_b7lfm"]
+[ext_resource type="Resource" uid="uid://2o507id6vp6w" path="res://Assets/Rules/decorazione_separapiano.tres" id="11_dt02v"]
+[ext_resource type="Resource" uid="uid://viqxbq5o470o" path="res://Assets/Rules/ringhiera_marcapiano.tres" id="12_tds6m"]
+[ext_resource type="Resource" uid="uid://crav1x5kwymcm" path="res://Assets/Rules/parete.tres" id="13_tsfih"]
+[ext_resource type="Resource" uid="uid://bbecocc64jo0a" path="res://Assets/Rules/scale_dx.tres" id="14_yt28e"]
+[ext_resource type="Resource" uid="uid://cmhbscmtbxxlc" path="res://Assets/Rules/scale_dx_marcapiano.tres" id="15_gxr4c"]
+[ext_resource type="Resource" uid="uid://bcuyoxkaq1i1a" path="res://Assets/Rules/scale_sx.tres" id="16_w0v82"]
+[ext_resource type="Resource" uid="uid://p5mp58vqbtl5" path="res://Assets/Rules/scale_sx_marcapiano.tres.tres" id="17_qa7ie"]
+[ext_resource type="Resource" uid="uid://dmh8k544ic4hx" path="res://Assets/Rules/vaso.tres" id="18_0d7bj"]
+[ext_resource type="Resource" uid="uid://bcdgkvkkqoixw" path="res://Assets/Rules/vaso_marcapiano.tres" id="19_30cf8"]
+[ext_resource type="Script" uid="uid://vv658sjc6ros" path="res://addons/grid_generator/configurations/simple_tiled.gd" id="20_60d0m"]
+
+[resource]
+script = ExtResource("20_60d0m")
+rules = Dictionary[int, ExtResource("1_wn5xu")]({
+0: ExtResource("2_wn5xu"),
+1: ExtResource("3_4k4w6"),
+2: ExtResource("4_c7lg6"),
+3: ExtResource("5_sto7w"),
+4: ExtResource("6_qwjh1"),
+5: ExtResource("7_jsbpb"),
+6: ExtResource("8_4hygs"),
+7: ExtResource("9_6qao5"),
+8: ExtResource("9_6qao5"),
+9: ExtResource("9_6qao5"),
+10: ExtResource("9_6qao5"),
+11: ExtResource("10_b7lfm"),
+12: ExtResource("9_6qao5"),
+13: ExtResource("10_b7lfm"),
+14: ExtResource("10_b7lfm"),
+15: ExtResource("11_dt02v"),
+16: ExtResource("12_tds6m"),
+17: ExtResource("11_dt02v"),
+18: ExtResource("11_dt02v"),
+19: ExtResource("13_tsfih"),
+20: ExtResource("10_b7lfm"),
+21: ExtResource("10_b7lfm"),
+22: ExtResource("14_yt28e"),
+23: ExtResource("15_gxr4c"),
+24: ExtResource("16_w0v82"),
+25: ExtResource("17_qa7ie"),
+26: ExtResource("18_0d7bj"),
+27: ExtResource("19_30cf8"),
+28: ExtResource("19_30cf8"),
+29: ExtResource("18_0d7bj")
+})
+metadata/_custom_type_script = "uid://vv658sjc6ros"

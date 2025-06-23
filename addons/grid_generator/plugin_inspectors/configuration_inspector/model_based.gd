@@ -1,0 +1,2 @@
+extends _MeshAdjacencyConfigurationInspector
+class_name ModelConfigurationInspector

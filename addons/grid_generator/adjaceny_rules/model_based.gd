@@ -1,0 +1,2 @@
+extends _AdjacencyRule
+class_name ModelAdjacencyRule

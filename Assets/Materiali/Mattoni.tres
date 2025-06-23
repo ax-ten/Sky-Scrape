@@ -5,5 +5,5 @@
 [resource]
 resource_name = "Mattoni.041"
 albedo_texture = ExtResource("1_yls8v")
-roughness = 0.3
+roughness = 0.9
 texture_filter = 0

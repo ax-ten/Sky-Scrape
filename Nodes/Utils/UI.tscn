@@ -1,0 +1,119 @@
+[gd_scene load_steps=10 format=3 uid="uid://bt3i6pct5kdy3"]
+
+[ext_resource type="FontFile" uid="uid://cf413mvbhnurg" path="res://Assets/ARCADECLASSIC.TTF" id="1_qui0h"]
+[ext_resource type="Script" uid="uid://f7lu2wica4vk" path="res://Scripts/ui.gd" id="1_vrfts"]
+[ext_resource type="Texture2D" uid="uid://c2t3qphlkhhky" path="res://Assets/Icons/Pausa_Esteso.png" id="2_vrfts"]
+[ext_resource type="Texture2D" uid="uid://bwpcvwuey0ycq" path="res://Assets/Icons/Pausa_Premuto.png" id="3_0mc3e"]
+[ext_resource type="Texture2D" uid="uid://miyfps2si808" path="res://Assets/Icons/cuoricino.png" id="3_2n5f6"]
+[ext_resource type="Texture2D" uid="uid://fv4lar2ogu6k" path="res://Assets/Icons/Menu_esteso.png" id="4_2n5f6"]
+[ext_resource type="Texture2D" uid="uid://b6d5e2v7p5l0h" path="res://Assets/Icons/Go!.png" id="7_75pfj"]
+[ext_resource type="AudioStream" uid="uid://fgvrs8b0jcls" path="res://Assets/Audio/arcade-countdown.mp3" id="7_u66u5"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2cqfq"]
+load_path = "res://.godot/imported/Menu_compresso.png-bd37148af56cac8d2ae013786d673837.ctex"
+
+[node name="UI" type="AspectRatioContainer" node_paths=PackedStringArray("score_label") groups=["UI"]]
+texture_filter = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 0.5
+script = ExtResource("1_vrfts")
+score_label = NodePath("VBoxContainer/HBoxContainer2/Score")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Menu" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+texture_normal = ExtResource("4_2n5f6")
+texture_pressed = SubResource("CompressedTexture2D_2cqfq")
+stretch_mode = 4
+
+[node name="Life" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_2n5f6")
+expand_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_2n5f6")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_2n5f6")
+expand_mode = 3
+
+[node name="Pause" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("2_vrfts")
+texture_pressed = ExtResource("3_0mc3e")
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Score" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qui0h")
+theme_override_font_sizes/font_size = 80
+text = "902839"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="GO" type="TextureRect" parent="VBoxContainer"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("7_75pfj")
+expand_mode = 5
+stretch_mode = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="CountDown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_u66u5")

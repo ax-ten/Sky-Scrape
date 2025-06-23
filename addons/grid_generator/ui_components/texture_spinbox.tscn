@@ -1,0 +1,126 @@
+[gd_scene load_steps=11 format=3 uid="uid://cvlopeo5xfcie"]
+
+[ext_resource type="Script" uid="uid://qxfbtnp0repl" path="res://addons/grid_generator/ui_components/texture_spinbox.gd" id="1_rhy55"]
+[ext_resource type="Texture2D" uid="uid://cnxtbqpdgm2hn" path="res://addons/grid_generator/ui_components/empty.png" id="2_wlh6i"]
+
+[sub_resource type="Image" id="Image_rhy55"]
+data = {
+"data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 101, 255, 255, 255, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 132, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 132, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 5, 255, 255, 255, 163, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 162, 255, 255, 255, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 15, 255, 255, 255, 189, 255, 255, 255, 255, 255, 255, 255, 242, 255, 255, 255, 70, 255, 255, 255, 71, 255, 255, 255, 242, 255, 255, 255, 255, 255, 255, 255, 189, 255, 255, 255, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 95, 255, 255, 255, 255, 255, 255, 255, 229, 255, 255, 255, 47, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 48, 255, 255, 255, 229, 255, 255, 255, 255, 255, 255, 255, 95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 115, 255, 255, 255, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 29, 255, 255, 255, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": "RGBA8",
+"height": 8,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_r0omj"]
+image = SubResource("Image_rhy55")
+
+[sub_resource type="Gradient" id="Gradient_trmxc"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cb5eg"]
+gradient = SubResource("Gradient_trmxc")
+
+[sub_resource type="Image" id="Image_wlh6i"]
+data = {
+"data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 115, 255, 255, 255, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 29, 255, 255, 255, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 95, 255, 255, 255, 255, 255, 255, 255, 229, 255, 255, 255, 48, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 48, 255, 255, 255, 229, 255, 255, 255, 255, 255, 255, 255, 95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 15, 255, 255, 255, 189, 255, 255, 255, 255, 255, 255, 255, 242, 255, 255, 255, 71, 255, 255, 255, 72, 255, 255, 255, 243, 255, 255, 255, 255, 255, 255, 255, 189, 255, 255, 255, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 5, 255, 255, 255, 162, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 162, 255, 255, 255, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 131, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 131, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 255, 255, 255, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": "RGBA8",
+"height": 8,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_trmxc"]
+image = SubResource("Image_wlh6i")
+
+[sub_resource type="Gradient" id="Gradient_mdtxf"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ch85a"]
+gradient = SubResource("Gradient_mdtxf")
+
+[node name="MeshSelector" type="Panel" node_paths=PackedStringArray("preview", "buttonup", "buttondown")]
+custom_minimum_size = Vector2(65, 56)
+offset_top = -1.0
+offset_right = 65.0
+offset_bottom = 55.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_rhy55")
+empty = ExtResource("2_wlh6i")
+preview = NodePath("Preview/Preview")
+buttonup = NodePath("Preview/Buttons/Up")
+buttondown = NodePath("Preview/Buttons/Down")
+
+[node name="Preview" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 60.0
+offset_bottom = 54.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="Preview" type="TextureRect" parent="Preview"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -24.0
+offset_right = 18.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wlh6i")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Buttons" type="VBoxContainer" parent="Preview"]
+texture_filter = 2
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.981
+anchor_top = 0.5
+anchor_right = 0.981
+anchor_bottom = 0.5
+offset_left = -10.974
+offset_top = -14.0
+offset_right = 5.026
+offset_bottom = 14.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Up" type="TextureButton" parent="Preview/Buttons"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 12)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+texture_normal = SubResource("ImageTexture_r0omj")
+texture_pressed = SubResource("ImageTexture_r0omj")
+texture_hover = SubResource("ImageTexture_r0omj")
+texture_disabled = SubResource("GradientTexture1D_cb5eg")
+stretch_mode = 5
+
+[node name="Down" type="TextureButton" parent="Preview/Buttons"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 12)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 1
+texture_normal = SubResource("ImageTexture_trmxc")
+texture_pressed = SubResource("ImageTexture_trmxc")
+texture_hover = SubResource("ImageTexture_trmxc")
+texture_disabled = SubResource("GradientTexture1D_ch85a")
+stretch_mode = 5
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="Preview/Buttons/Up" to="." method="prev"]
+[connection signal="pressed" from="Preview/Buttons/Down" to="." method="next"]

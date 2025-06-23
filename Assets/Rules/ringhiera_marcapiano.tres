@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TiledAdjacencyRule" load_steps=2 format=3 uid="uid://viqxbq5o470o"]
+
+[ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/grid_generator/adjaceny_rules/simple_tiled.gd" id="1_1sp0t"]
+
+[resource]
+script = ExtResource("1_1sp0t")
+weight = 1.0
+ADJACENCIES = Dictionary[StringName, PackedInt32Array]({
+&"X+": PackedInt32Array(3, 15, 16, 17, 18, 27, 28, 25),
+&"X-": PackedInt32Array(6, 15, 16, 17, 18, 27, 28, 23),
+&"Y+": PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 26, 27, 28, 29, -1),
+&"Y-": PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 26, 27, 28, 29, -1),
+&"Z+": PackedInt32Array(-1),
+&"Z-": PackedInt32Array(7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21)
+})
+metadata/_custom_type_script = "uid://byh1hh2kei7fd"

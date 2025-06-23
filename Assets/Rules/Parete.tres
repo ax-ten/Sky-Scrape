@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="TiledAdjacencyRule" load_steps=2 format=3 uid="uid://bqi7jpxbnhtl"]
-
-[ext_resource type="Script" uid="uid://byh1hh2kei7fd" path="res://addons/mesh_adjacency_inspector/adjacency_rule.gd" id="1_p5vkq"]
-
-[resource]
-script = ExtResource("1_p5vkq")
-metadata/_custom_type_script = "uid://byh1hh2kei7fd"

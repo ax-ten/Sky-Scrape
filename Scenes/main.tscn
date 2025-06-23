@@ -1,0 +1,441 @@
+[gd_scene load_steps=45 format=3 uid="uid://brcxm0pfp5j6v"]
+
+[ext_resource type="Script" uid="uid://1h70dkdegyle" path="res://Scripts/camera.gd" id="1_uq7jr"]
+[ext_resource type="Script" uid="uid://cis143jvnus1a" path="res://Scripts/spawner.gd" id="2_ltoj3"]
+[ext_resource type="AudioStream" uid="uid://sl5xe3dd7g7b" path="res://Assets/Audio/city-intersection.mp3" id="2_nb11o"]
+[ext_resource type="PackedScene" uid="uid://dqxw82uj3aty2" path="res://Nodes/player.tscn" id="3_tm25p"]
+[ext_resource type="Shader" uid="uid://0jigqdumgowh" path="res://Scenes/sky.gdshader" id="4_cun2r"]
+[ext_resource type="Script" uid="uid://bd6oy6px0gqtm" path="res://Scripts/world_environment.gd" id="4_qscjt"]
+[ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Nodes/Palazzo/PalazzoMeshLibrary.tres" id="5_ccmul"]
+[ext_resource type="Texture2D" uid="uid://dq4lqnplikj3u" path="res://Assets/Materiali/CloudNoise.tres" id="6_xcy2v"]
+[ext_resource type="PackedScene" uid="uid://bk26ugv40ivho" path="res://Assets/PezziPalazzo/laterale.tscn" id="7_nb11o"]
+[ext_resource type="PackedScene" uid="uid://cyvvixy3yxk1g" path="res://addons/grid_generator/grid_generator.tscn" id="8_dxo86"]
+[ext_resource type="Script" uid="uid://bcbrgsrsbab2j" path="res://Scripts/item_spawner.gd" id="8_xcy2v"]
+[ext_resource type="PackedScene" uid="uid://c7w1n7ieg7h40" path="res://Nodes/Utils/secchio di vernice.tscn" id="9_dxo86"]
+[ext_resource type="Script" uid="uid://cjfqfjpagdldl" path="res://addons/grid_generator/addendum/direction/direction.gd" id="9_xcy2v"]
+[ext_resource type="Script" uid="uid://c6xomc08ollxr" path="res://Scripts/tutorial.gd" id="10_a8up6"]
+[ext_resource type="Texture2D" uid="uid://gwsbkptyhf04" path="res://Assets/Icons/manotutorial.png" id="11_e0qyk"]
+[ext_resource type="Texture2D" uid="uid://ble764l7wjywq" path="res://Assets/Icons/frecciaSx.png" id="12_747jk"]
+[ext_resource type="Texture2D" uid="uid://37kupm565d5a" path="res://Assets/Icons/frecciaDx.png" id="13_nqgrc"]
+[ext_resource type="Texture2D" uid="uid://cu0rgp4cqdc0e" path="res://Assets/Icons/frecciaUp.png" id="14_730o7"]
+[ext_resource type="PackedScene" uid="uid://bt3i6pct5kdy3" path="res://Nodes/Utils/UI.tscn" id="15_shq5y"]
+[ext_resource type="AudioStream" uid="uid://cgxj8yyn3jr2a" path="res://Assets/Audio/Music/give-it-what-you-can.mp3" id="18_ccmul"]
+[ext_resource type="Script" uid="uid://cxul5e11k7dfn" path="res://Scripts/background_music.gd" id="19_cun2r"]
+[ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/grid_generator/grid_generator.gd" id="20_nb11o"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dxo86"]
+auto_exposure_speed = 1.25
+dof_blur_far_enabled = true
+dof_blur_far_transition = 31.6
+dof_blur_amount = 0.02
+
+[sub_resource type="Compositor" id="Compositor_xcy2v"]
+compositor_effects = Array[CompositorEffect]([null])
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xcy2v"]
+width = 16
+height = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nb11o"]
+shader = ExtResource("4_cun2r")
+shader_parameter/cloud_shape_sampler = ExtResource("6_xcy2v")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_xcy2v")
+shader_parameter/clouds_samples = 16
+shader_parameter/shadow_sample = 1
+shader_parameter/clouds_density = 0.6
+shader_parameter/clouds_scale = 0.5
+shader_parameter/clouds_smoothness = 0.05
+shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_shadow_intensity = 0.6
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(0.602228, 0.866752, 0.94075, 1)
+shader_parameter/bottom_color = Color(0.0706721, 0.515117, 0.582691, 1)
+shader_parameter/sun_scatter = Color(0.33288, 0.332881, 0.33288, 1)
+shader_parameter/astro_tint = Color(1, 0.909735, 0.688048, 1)
+shader_parameter/astro_scale = 5.1
+shader_parameter/astro_intensity = 1.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_7mycd"]
+sky_material = SubResource("ShaderMaterial_nb11o")
+
+[sub_resource type="Environment" id="Environment_272bh"]
+background_mode = 2
+background_energy_multiplier = 1.1
+sky = SubResource("Sky_7mycd")
+sky_rotation = Vector3(-0.0698132, 0, -1.09956)
+fog_enabled = true
+fog_sky_affect = 0.081
+volumetric_fog_density = 0.0
+
+[sub_resource type="Animation" id="Animation_w48qg"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_vivmo"]
+resource_name = "pulse"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = PackedFloat32Array(0, 1, 0, -1.23, 0, 1.46667, 1, -1.715, -0.885, 0)
+tracks/1/type = "scale_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = PackedFloat32Array(0, 1, 1, 1, 1, 2, 1, 1.2, 1.2, 1.2)
+
+[sub_resource type="Animation" id="Animation_2cqfq"]
+resource_name = "pulse_dx"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 1, 1, 1, 1.96667, 1, 1.2, 1.2, 1.2)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = PackedFloat32Array(0.0333333, 1, 0, -1.23, 0, 1.46667, 1, 1.715, -0.885, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yaehf"]
+_data = {
+&"RESET": SubResource("Animation_w48qg"),
+&"pulseSx": SubResource("Animation_vivmo"),
+&"pulse_dx": SubResource("Animation_2cqfq")
+}
+
+[sub_resource type="Resource" id="Resource_e0qyk"]
+script = ExtResource("9_xcy2v")
+name = &"X+"
+vector = Vector3i(1, 0, 0)
+
+[sub_resource type="Resource" id="Resource_747jk"]
+script = ExtResource("9_xcy2v")
+name = &"X-"
+vector = Vector3i(-1, 0, 0)
+
+[sub_resource type="Resource" id="Resource_nqgrc"]
+script = ExtResource("9_xcy2v")
+name = &"Y+"
+vector = Vector3i(0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_730o7"]
+script = ExtResource("9_xcy2v")
+name = &"Y-"
+vector = Vector3i(0, 0, -1)
+
+[sub_resource type="Resource" id="Resource_shq5y"]
+script = ExtResource("9_xcy2v")
+name = &"Z+"
+vector = Vector3i(0, 1, 0)
+
+[sub_resource type="Resource" id="Resource_cma7p"]
+script = ExtResource("9_xcy2v")
+name = &"Z-"
+vector = Vector3i(0, -1, 0)
+
+[sub_resource type="Resource" id="Resource_usbst"]
+script = ExtResource("9_xcy2v")
+name = &"X+"
+vector = Vector3i(1, 0, 0)
+
+[sub_resource type="Resource" id="Resource_uh3ed"]
+script = ExtResource("9_xcy2v")
+name = &"X-"
+vector = Vector3i(-1, 0, 0)
+
+[sub_resource type="Resource" id="Resource_hlqjr"]
+script = ExtResource("9_xcy2v")
+name = &"Y+"
+vector = Vector3i(0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_l2vhu"]
+script = ExtResource("9_xcy2v")
+name = &"Y-"
+vector = Vector3i(0, 0, -1)
+
+[sub_resource type="Resource" id="Resource_052nx"]
+script = ExtResource("9_xcy2v")
+name = &"Z+"
+vector = Vector3i(0, 1, 0)
+
+[sub_resource type="Resource" id="Resource_ews5c"]
+script = ExtResource("9_xcy2v")
+name = &"Z-"
+vector = Vector3i(0, -1, 0)
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.994039, 0.0847268, 0.0686104, -0.109023, 0.772514, 0.625569, 0, -0.62932, 0.777146, 0, 2.2265, 4.12902)
+keep_aspect = 0
+attributes = SubResource("CameraAttributesPractical_dxo86")
+compositor = SubResource("Compositor_xcy2v")
+fov = 90.0
+far = 60.0
+script = ExtResource("1_uq7jr")
+smooth_factor = 0.051
+
+[node name="Traffic" type="AudioStreamPlayer3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, -12.4829, 0, 0)
+stream = ExtResource("2_nb11o")
+autoplay = true
+
+[node name="PlayerSpawner" type="Node3D" parent="." groups=["playerspawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84765, 0.0143394)
+script = ExtResource("2_ltoj3")
+playerscene = ExtResource("3_tm25p")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_272bh")
+script = ExtResource("4_qscjt")
+
+[node name="WFCGridMap" parent="." instance=ExtResource("8_dxo86")]
+transform = Transform3D(-7.54979e-08, 1.13999e-14, 1, -1.50996e-07, -1, -1.69407e-21, 1, -1.50996e-07, 7.54979e-08, -9.31397, 1.90735e-06, -8.80289)
+data = {
+"cells": PackedInt32Array(0, 0, 2, 0, 1, 2, 0, 2, 5, 0, 3, 0, 0, 4, 29, 0, 5, 24, 65536, 0, 12, 65536, 1, 12, 65536, 2, 9, 65536, 3, 7, 65536, 4, 19, 65536, 5, 11, 1, 0, 29, 1, 1, 24, 1, 2, 0, 1, 3, 5, 1, 4, 22, 1, 5, 24, 65537, 0, 10, 65537, 1, 10, 65537, 2, 10, 65537, 3, 13, 65537, 4, 20, 65537, 5, 9, 2, 0, 2, 2, 1, 5, 2, 2, 24, 2, 3, 29, 2, 4, 2, 2, 5, 2, 65538, 0, 13, 65538, 1, 13, 65538, 2, 8, 65538, 3, 8, 65538, 4, 9, 65538, 5, 13, 3, 0, 5, 3, 1, 22, 3, 2, 2, 3, 3, 0, 3, 4, 29, 3, 5, 5, 65539, 0, 21, 65539, 1, 9, 65539, 2, 13, 65539, 3, 9, 65539, 4, 19, 65539, 5, 19, 4, 0, 24, 4, 1, 24, 4, 2, 22, 4, 3, 29, 4, 4, 1, 4, 5, 5, 65540, 0, 9, 65540, 1, 21, 65540, 2, 12, 65540, 3, 7, 65540, 4, 7, 65540, 5, 21, 5, 0, 1, 5, 1, 1, 5, 2, 1, 5, 3, 2, 5, 4, 24, 5, 5, 1, 65541, 0, 12, 65541, 1, 9, 65541, 2, 21, 65541, 3, 7, 65541, 4, 7, 65541, 5, 7)
+}
+propagation_direction = "Z-"
+
+[node name="ItemSpawner" type="Node3D" parent="." groups=["ItemSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.279595, -22.0263)
+script = ExtResource("8_xcy2v")
+spawnables = Array[PackedScene]([ExtResource("9_dxo86")])
+
+[node name="Label" type="Label" parent="ItemSpawner"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Positions" type="Node3D" parent="ItemSpawner"]
+
+[node name="Position2" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.00187, 0, 0.143015)
+
+[node name="Position3" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.98304, 0, 0.143015)
+
+[node name="Position4" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01805, 0, 0.143015)
+
+[node name="Position5" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00131, 0, 0.143015)
+
+[node name="Position6" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.02014, 0, 0.143015)
+
+[node name="Position7" type="Marker3D" parent="ItemSpawner/Positions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.98513, 0, 0.143015)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.146506, 0.875023, 0.461379, -0.0131448, -0.464648, 0.885398, 0.989123, -0.135781, -0.0565719, 0, 0, 0)
+light_energy = 1.318
+light_specular = 0.05
+light_bake_mode = 1
+shadow_enabled = true
+shadow_normal_bias = 10.0
+shadow_opacity = 0.56
+shadow_blur = 1.571
+
+[node name="TutorialSwipe" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.57901, -0.633024)
+script = ExtResource("10_a8up6")
+
+[node name="Sprite3D" type="Sprite3D" parent="TutorialSwipe"]
+billboard = 1
+texture = ExtResource("11_e0qyk")
+
+[node name="FrecciaSx" type="Sprite3D" parent="TutorialSwipe"]
+transform = Transform3D(1.09677, 0, 0, 0, 1.09677, 0, 0, 0, 1.09677, -1.0732, 0, 0)
+billboard = 1
+texture = ExtResource("12_747jk")
+
+[node name="FrecciaDx" type="Sprite3D" parent="TutorialSwipe"]
+transform = Transform3D(1.19798, 0, 0, 0, 1.19798, 0, 0, 0, 1.19798, 1.18999, 0, 0)
+billboard = 1
+texture = ExtResource("13_nqgrc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSwipe"]
+libraries = {
+&"": SubResource("AnimationLibrary_yaehf")
+}
+
+[node name="TutorialJump" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.57901, 0.705592)
+visible = false
+script = ExtResource("10_a8up6")
+
+[node name="Sprite3D" type="Sprite3D" parent="TutorialJump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.23, 0)
+billboard = 1
+texture = ExtResource("11_e0qyk")
+
+[node name="FrecciaUp" type="Sprite3D" parent="TutorialJump"]
+billboard = 2
+texture = ExtResource("14_730o7")
+
+[node name="UI" parent="." instance=ExtResource("15_shq5y")]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_ccmul")
+volume_db = -10.0
+autoplay = true
+script = ExtResource("19_cun2r")
+
+[node name="WFCGridMap2" type="GridMap" parent="."]
+transform = Transform3D(-4.37114e-08, -8.74228e-08, 1, 0, -1, -8.74228e-08, 1, -3.82137e-15, 4.37114e-08, 11.1698, -0.222275, -29.4185)
+mesh_library = ExtResource("5_ccmul")
+cell_size = Vector3(3.4, 0.532, 3.4)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+cell_scale = 0.2
+data = {
+"cells": PackedInt32Array(65533, 65530, 19, 65533, 65531, 19, 65533, 65532, 9, 65533, 65533, 19, 65533, 65534, 19, 65533, 65535, 7, 65533, 0, 19, 65534, 65530, 19, 65534, 65531, 14, 65534, 65532, 19, 65534, 65533, 14, 65534, 65534, 19, 65534, 65535, 7, 65534, 0, 7, 65535, 65530, 19, 65535, 65531, 19, 65535, 65532, 10, 65535, 65533, 19, 65535, 65534, 19, 65535, 65535, 19, 65535, 0, 20, 0, 65530, 19, 0, 65531, 19, 0, 65532, 19, 0, 65533, 8, 0, 65534, 19, 0, 65535, 9, 0, 0, 19, -3, 65533, 2, -3, 65534, 18, -2, 65533, 1, -2, 65534, 18, -2, 65535, 17, -3, 65535, 17, -1, 65535, 17, -65536, 65535, 17, -1, 65534, 18, -65536, 65534, 18, -1, 0, 4, -1, 65533, 5, -2, 0, 26, -65536, 65533, 29, -2, 65531, 6, -3, 65531, 25, -65536, 65531, 28, -1, 65531, 15, -3, 65532, 26)
+}
+script = ExtResource("20_nb11o")
+propagation_direction = "+Z"
+direction_matrix = Array[ExtResource("9_xcy2v")]([SubResource("Resource_e0qyk"), SubResource("Resource_747jk"), SubResource("Resource_nqgrc"), SubResource("Resource_730o7"), SubResource("Resource_shq5y"), SubResource("Resource_cma7p")])
+metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="Laterali2" type="Node3D" parent="WFCGridMap2"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -5.37651)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap2/Laterali2"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale8" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap2/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap2/Laterali2"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale8" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap2/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="WFCGridMap3" type="GridMap" parent="."]
+transform = Transform3D(4.37114e-08, 8.74228e-08, 1, -3.55271e-14, -1, 8.74228e-08, 1, -4.53793e-14, -4.37114e-08, 10.7551, -1.10498, -13.441)
+mesh_library = ExtResource("5_ccmul")
+cell_size = Vector3(3.4, 0.532, 3.4)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+cell_scale = 0.2
+data = {
+"cells": PackedInt32Array(65533, 65530, 19, 65533, 65531, 19, 65533, 65532, 9, 65533, 65533, 19, 65533, 65534, 19, 65533, 65535, 7, 65533, 0, 19, 65534, 65530, 19, 65534, 65531, 14, 65534, 65532, 19, 65534, 65533, 14, 65534, 65534, 19, 65534, 65535, 7, 65534, 0, 7, 65535, 65530, 19, 65535, 65531, 19, 65535, 65532, 10, 65535, 65533, 19, 65535, 65534, 19, 65535, 65535, 19, 65535, 0, 20, 0, 65530, 19, 0, 65531, 19, 0, 65532, 19, 0, 65533, 8, 0, 65534, 19, 0, 65535, 9, 0, 0, 19, -3, 65533, 2, -3, 65534, 18, -2, 65533, 1, -2, 65534, 18, -2, 65535, 17, -3, 65535, 17, -1, 65535, 17, -65536, 65535, 17, -1, 65534, 18, -65536, 65534, 18, -1, 0, 4, -1, 65533, 5, -2, 0, 26, -65536, 65533, 29, -2, 65531, 6, -3, 65531, 25, -65536, 65531, 28, -1, 65531, 15, -3, 65532, 26)
+}
+script = ExtResource("20_nb11o")
+propagation_direction = "+Z"
+direction_matrix = Array[ExtResource("9_xcy2v")]([SubResource("Resource_usbst"), SubResource("Resource_uh3ed"), SubResource("Resource_hlqjr"), SubResource("Resource_l2vhu"), SubResource("Resource_052nx"), SubResource("Resource_ews5c")])
+metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="Laterali2" type="Node3D" parent="WFCGridMap3"]
+transform = Transform3D(-1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0, 1, -3.39528, 0.250345, -5.37651)
+
+[node name="LateraliSX" type="Node3D" parent="WFCGridMap3/Laterali2"]
+transform = Transform3D(1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, 6.51155, 0.391722, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale8" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap3/Laterali2/LateraliSX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[node name="LateraliDX" type="Node3D" parent="WFCGridMap3/Laterali2"]
+transform = Transform3D(-1.69, 0, 0, 0, 1.69, 0, 0, 0, 1.69, -6.36994, 0.391721, 1.83201)
+
+[node name="Laterale" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 0.468662)
+
+[node name="Laterale2" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, 2.46941)
+
+[node name="Laterale8" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -9.52837)
+
+[node name="Laterale9" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -7.53465)
+
+[node name="Laterale10" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -5.52885)
+
+[node name="Laterale11" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -3.5281)
+
+[node name="Laterale12" parent="WFCGridMap3/Laterali2/LateraliDX" instance=ExtResource("7_nb11o")]
+transform = Transform3D(1.18, 0, 0, 0, 1.18, 0, 0, 0, 1.18, -8.12463, 0.11181, -1.53439)
+
+[connection signal="finished" from="Camera3D/Traffic" to="Camera3D" method="loop_traffic_sound"]
