@@ -51,6 +51,21 @@ static func intersect(s1: Set, s2: Set) -> Set:
 	#print("s1: %s\ns2: %s\nfiltrato:%s" % [str(s1), str(s2), str(filtered)])
 	return filtered
 
+static func difference(s1, s2) -> Set:
+	var filtered := Set.new()
+	s1 = Set.new(s1)
+	s2 = Set.new(s2)
+	for e in s1:
+		if not s2.has(e):
+			filtered.add(e)
+	return filtered
+
+
+func get_random() -> Variant:
+	if size() < 1:
+		return null
+	var r := randi_range(0, size()-1)
+	return _data.keys()[r]
 
 ## Supporto per "for element in my_set"
 func _iter_init(iter: Array) -> bool:

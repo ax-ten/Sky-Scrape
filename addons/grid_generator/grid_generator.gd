@@ -3,7 +3,6 @@ extends GridMap
 class_name GridGenerator
 
 
-var generation: GenerationAlgorithm = WFCAlgorithm.new()
 signal do_reset
 
 var possibilities: Dictionary = {}
@@ -17,16 +16,12 @@ var frontier := Set.new() # set of Vector3i
 #@export var visualizer : Visualizer
 @export_tool_button("    Generate all    ", "Play")
 var sg : Callable = func():
-	reset()
-	possibilities = wave(_from, _to)
-	generation.step(self)
 	generation.populate(self)
-	#collapse_cell(get_starting_position(propagation_direction))
-	
+
+
 @export_tool_button("     Next step       ", "MoveRight")
 var nx : Callable = func():
 	generation.step(self)
-	#visualizer.visualize(possibilities)
 
 
 @export_tool_button("Reset + inizialize", "Reload")
@@ -34,29 +29,20 @@ var clear_grid: Callable = func():
 	reset()
 	print("from: ", _from, "    to: ", _to)
 	possibilities = wave(_from, _to)
-	generation.reset_state()
+	frontier.add(Vector3i(0,1,0))
 
-@export_enum("Wave Function Collapse", "Model Synthesis") 
-var generation_algorithm := 0:
-	set(value):
-		generation_algorithm = value
-		generation = [WFCAlgorithm, MSAlgorithm][generation_algorithm].new()
-		notify_property_list_changed()
+@export var generation: GenerationAlgorithm
+
 
 @export_enum("X+",  "X-", "Y+", "Y-", "Z+", "Z-") var propagation_direction = "Z+"
 
 
-
 @export_category("Generation Region")
 @export var _from :=  Vector3i(0, 0, 0)
-@export var _to  :=  Vector3i(5, 2, 5)
-
-
-
+@export var _to  :=  Vector3i(7, 2, 4)
 
 @export_category("Adjacency configurator")
 @export var config: _MeshAdjacencyConfiguration
-
 
 @export_category("Direction Transformation Matrix")
 @export var direction_matrix: Array[Direction3D] = [
@@ -92,36 +78,51 @@ func reset():
 	clear()
 	frontier.clear()
 	possibilities.clear()
-	generation.reset_state()
 	collapsed.clear()
+	generation._init()
 
 
 func validity() -> bool:
+	print("validation check")
 	for pos in collapsed:
+		var pos_item = get_cell_item(pos)
+		var rule = config.rules.get(pos_item, config.air_rule())
 		for dir in direction_matrix:
 			var neighbor_item = get_cell_item(pos + dir.vector)
-			var pos_item = get_cell_item(pos)
-			if neighbor_item not in config.rules[pos_item].get(dir):
+			if neighbor_item not in rule.get(dir.name):
+				print("errore tra ", pos, " e ", pos + dir.vector)
 				return false
+		await  get_tree().process_frame
 	return true
 	
 
 func propagate_constraints(origin: Vector3i):
 	var mesh_id = get_cell_item(origin)
-	var rule: TiledAdjacencyRule = config.rules.get(mesh_id)
-	if mesh_id == -1:
-		rule = config.air_rule()
+	var rule: TiledAdjacencyRule 
+	
+	rule = config.air_rule() if mesh_id == -1 else config.rules.get(mesh_id)
+
 	for dir in direction_matrix:
-		var neighbor : Vector3i= origin + dir.vector
+		var neighbor : Vector3i = origin + dir.vector
 		#print("neighbor in collapsed: %s \nneighbor in possibilities: %s" % [str(not possibilities.has(neighbor)), str(collapsed.has(neighbor))])
+		
+		#print("neigh", neighbor, " ", possibilities.get(neighbor,"non ha opzioni"))
 		if not possibilities.has(neighbor) :
 			continue
 		var origin_possibilities = rule.get(dir.name)
-		possibilities[neighbor] = PackedInt32Array(Set.intersect(
-			Set.new(possibilities[neighbor]), 
+		
+		var current = possibilities[neighbor]
+		var updated = PackedInt32Array(Set.intersect(
+			Set.new(current),
 			Set.new(origin_possibilities)
-			).values())
-		frontier.add(neighbor)
+		).values())
+
+		# Aggiungi alla frontier solo se cambia davvero
+		if updated != current:
+			possibilities[neighbor] = updated
+			frontier.add(neighbor)
+
+	#print("_______________________________________")
 
 
 func get_weights(options:PackedInt32Array) -> Array[float]:
@@ -151,6 +152,7 @@ func wave(from: Vector3, to: Vector3) -> Dictionary:
 				grid[Vector3i(x, y, z)] = PackedInt32Array(mesh_library.get_item_list())
 	#grid[get_starting_position(propagation_direction)] = PackedInt32Array([7,8,9,10,11,12,13,14,19,20,21])
 	grid[Vector3i(0,0,0)] = PackedInt32Array([0,1,2,3,4,5,6,15,16,17,18,22,23,24,25,26,27,28,29])
+	grid[Vector3i(0,1,0)] = PackedInt32Array([7,8,9,10,11,12,13,14,19,20,21])
 	return grid
 
 

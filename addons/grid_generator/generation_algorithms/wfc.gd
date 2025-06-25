@@ -8,7 +8,14 @@ func step(grid: GridGenerator) -> bool:
 	var pos = least_entropy(grid)
 	if not pos:
 		print("non riesco a trovare la minor entropia")
-		return false
+		if grid.frontier.is_empty():
+			grid.frontier = Set.difference(grid.possibilities.keys(), grid.collapsed)
+			if grid.frontier.is_empty():
+				grid.frontier = Set.new(grid.possibilities.keys())
+				#return false
+		pos = grid.frontier.get_random()
+		if not pos:
+			return false
 	collapse_cell(grid, pos)
 	grid.propagate_constraints(pos)
 	return true
@@ -16,20 +23,23 @@ func step(grid: GridGenerator) -> bool:
 
 func least_entropy(grid: GridGenerator) -> Vector3i:
 	var min_entropy := INF
-	var frontier: Set = grid.frontier
-	var best_pos = null
-	for pos in frontier:
+	var best_pos : Vector3i
+	print("frontier: ", grid.frontier)
+	for pos in grid.frontier:
 		var options := grid.possibilities.get(pos, null)
 		if not options:
-			#print("no opts at ", pos)
-			frontier.remove(pos)
+			print("no opts at ", pos)
+			grid.frontier.remove(pos)
 			continue
 		if options.size() == 1:
+			grid.frontier.remove(best_pos)
 			return pos
-		var entropy = shannon_entropy(grid.get_weights(options)) + randf_range(0.0, 0.001)
+		var entropy = shannon_entropy(grid.get_weights(options)) + randf_range(0.0, 0.01)
 		if entropy < min_entropy:
 			min_entropy = entropy
 			best_pos = pos
+	grid.frontier.remove(best_pos)
+	
 	return best_pos
 
 

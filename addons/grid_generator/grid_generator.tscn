@@ -1,9 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyvvixy3yxk1g"]
+[gd_scene load_steps=14 format=3 uid="uid://cyvvixy3yxk1g"]
 
 [ext_resource type="MeshLibrary" uid="uid://0d88ggptg4c7" path="res://Nodes/Palazzo/PalazzoMeshLibrary.tres" id="1_7ymw8"]
 [ext_resource type="Script" uid="uid://c3ug6qkmnd2t" path="res://addons/grid_generator/grid_generator.gd" id="2_7ymw8"]
 [ext_resource type="Resource" uid="uid://bt0ftnfa35xi1" path="res://Assets/Rules/Configurazione semplice.tres" id="3_21143"]
+[ext_resource type="Script" uid="uid://dhfxsnfvybac1" path="res://addons/grid_generator/generation_algorithms/wfc.gd" id="5_hksmu"]
 [ext_resource type="Script" uid="uid://cjfqfjpagdldl" path="res://addons/grid_generator/addendum/direction/direction.gd" id="6_ecow7"]
+[ext_resource type="Script" uid="uid://d147f8p207wnb" path="res://addons/grid_generator/generation_algorithms/model_synthesis.gd" id="6_y7yvd"]
+[ext_resource type="Script" uid="uid://dobnn7vpaei1c" path="res://addons/grid_generator/Measurer.gd" id="7_y7yvd"]
 
 [sub_resource type="Resource" id="Resource_45qv0"]
 script = ExtResource("6_ecow7")
@@ -35,7 +38,7 @@ script = ExtResource("6_ecow7")
 name = &"Z-"
 vector = Vector3i(0, 1, 0)
 
-[node name="GridGenerator" type="GridMap" groups=["Debug"]]
+[node name="GridGenerator" type="GridMap" node_paths=PackedStringArray("generation") groups=["Debug"]]
 transform = Transform3D(-1.31134e-07, 1.14641e-14, 1, -8.74228e-08, -1, 0, 1, -8.74228e-08, 1.31134e-07, 0, 0, 0)
 mesh_library = ExtResource("1_7ymw8")
 cell_size = Vector3(3.4, 0.532, 3.4)
@@ -44,13 +47,24 @@ cell_center_y = false
 cell_center_z = false
 cell_scale = 0.2
 data = {
-"cells": PackedInt32Array(0, 0, 4, 1, 0, 23, 2, 0, 15, 3, 0, 15, 4, 0, 16, 5, 0, 16, 6, 0, 17, 7, 0, 25, 65536, 0, 19, 65537, 0, 8, 65538, 0, 19, 65539, 0, 19, 65540, 0, 12, 65541, 0, 14, 65542, 0, 19, 65543, 0, 19, 0, 1, 2, 1, 1, 5, 4, 1, 0, 5, 1, 2, 7, 1, 24, 65536, 1, 14, 65537, 1, 13, 65538, 1, 19, 65539, 1, 12, 65540, 1, 19, 65541, 1, 21, 65542, 1, 7, 65543, 1, 19, 0, 2, 17, 1, 2, 27, 2, 2, 4, 3, 2, 4, 4, 2, 4, 5, 2, 6, 6, 2, 17, 7, 2, 3, 65536, 2, 19, 65537, 2, 7, 65538, 2, 8, 65539, 2, 9, 65540, 2, 9, 65541, 2, 19, 65542, 2, 19, 65543, 2, 10, 0, 3, 3, 1, 3, 6, 2, 3, 15, 3, 3, 16, 4, 3, 28, 5, 3, 25, 6, 3, 6, 7, 3, 27, 65536, 3, 9, 65537, 3, 19, 65538, 3, 19, 65539, 3, 14, 65540, 3, 12, 65541, 3, 9, 65542, 3, 19, 65543, 3, 12, 0, 4, 1, 1, 4, 22, 3, 4, 26, 4, 4, 26, 5, 4, 2, 6, 4, 22, 7, 4, 26, 65536, 4, 19, 65537, 4, 19, 65538, 4, 7, 65539, 4, 12, 65540, 4, 7, 65541, 4, 20, 65542, 4, 9, 65543, 4, 12, 0, 5, 2, 1, 5, 5, 2, 5, 24, 3, 5, 5, 4, 5, 0, 5, 5, 24, 6, 5, 1, 7, 5, 5, 65536, 5, 13, 65537, 5, 20, 65538, 5, 8, 65539, 5, 9, 65540, 5, 20, 65541, 5, 19, 65542, 5, 20, 65543, 5, 9, 0, 6, 3, 1, 6, 6, 2, 6, 25, 3, 6, 6, 4, 6, 16, 5, 6, 3, 6, 6, 23, 7, 6, 28, 65536, 6, 21, 65537, 6, 21, 65538, 6, 8, 65539, 6, 10, 65540, 6, 19, 65541, 6, 20, 65542, 6, 7, 65543, 6, 8, 0, 7, 6, 1, 7, 16, 2, 7, 28, 3, 7, 28, 4, 7, 18, 5, 7, 16, 6, 7, 17, 7, 7, 3, 65536, 7, 7, 65537, 7, 8, 65538, 7, 7, 65539, 7, 7, 65540, 7, 19, 65541, 7, 8, 65542, 7, 19, 65543, 7, 13)
+"cells": PackedInt32Array(65536, 0, 20, 65536, 1, 8, 65536, 2, 20, 0, 2, 1, 1, 2, 22, 2, 2, 2, 3, 2, 5, 65537, 2, 9, 4, 2, 24, 65540, 2, 8, 1, 1, 4, 2, 1, 4, 3, 1, 6, 0, 1, 4, 4, 1, 17, 65540, 1, 19, 65538, 1, 10, 65538, 0, 19, 2, 0, 22, 1, 0, 2, 65539, 1, 21, 3, 0, 29, 65539, 0, 8, 4, 0, 24, 65540, 0, 12, 65540, 3, 21, 4, 3, 3, 3, 3, 16, 2, 3, 16, 1, 3, 23, 0, 3, 4, 65537, 3, 7, 65537, 4, 13, 1, 4, 4, 2, 4, 6, 0, 4, 25, 65536, 4, 7, 3, 4, 3, 4, 4, 6, 65539, 4, 21, 65536, 5, 13, 0, 5, 5, 1, 5, 2, 2, 5, 22, 3, 5, 26, 65539, 5, 12, 65538, 5, 19, 4, 5, 0, 2, 6, 0, 3, 6, 26, 65539, 6, 12, 1, 6, 0, 4, 6, 29, 65540, 6, 9, 0, 6, 26, 65536, 6, 7, 65537, 1, 19, 65538, 4, 20, 65539, 2, 14, 65538, 3, 9, 65537, 0, 19, 65536, 3, 13, 65540, 4, 11, 65537, 5, 21, 65539, 3, 12, 65537, 6, 14, 65538, 2, 21, 65540, 5, 20, 65538, 6, 7)
 }
 script = ExtResource("2_7ymw8")
-generation_algorithm = 1
-propagation_direction = "X+"
-_to = Vector3i(8, 2, 9)
+generation = NodePath("WFCAlgorithm")
+_to = Vector3i(5, 2, 7)
 config = ExtResource("3_21143")
 direction_matrix = Array[ExtResource("6_ecow7")]([SubResource("Resource_45qv0"), SubResource("Resource_hkujn"), SubResource("Resource_nk8lf"), SubResource("Resource_pchsm"), SubResource("Resource_y7q3x"), SubResource("Resource_o0wqn")])
 metadata/_custom_type_script = "uid://c3ug6qkmnd2t"
 metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="WFCAlgorithm" type="Node" parent="."]
+script = ExtResource("5_hksmu")
+metadata/_custom_type_script = "uid://dhfxsnfvybac1"
+
+[node name="MSAlgorithm" type="Node" parent="."]
+script = ExtResource("6_y7yvd")
+metadata/_custom_type_script = "uid://d147f8p207wnb"
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("7_y7yvd")
+connessioni = 1

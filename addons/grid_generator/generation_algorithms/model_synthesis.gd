@@ -4,11 +4,12 @@ extends GenerationAlgorithm
 class_name MSAlgorithm
 
 var order: Array
-var current_step := 0
+var current_step
 
-func _reset_state() -> void:
+func _init() -> void:
 	order.clear()
-
+	current_step = 0
+	super._init()
 
 
 func step(grid: GridGenerator) -> bool:
@@ -29,8 +30,8 @@ func step(grid: GridGenerator) -> bool:
 
 func unroll(grid: GridGenerator) -> Array :
 	order = []
-	for z in range(grid._from.x, grid._to.x) :
+	for x in range(grid._from.x, grid._to.x) :
 		for y in range(grid._from.y, grid._to.y) :
-			for x in range(grid._from.z, grid._to.z) :
+			for z in range(grid._from.z, grid._to.z) :
 				order.append(Vector3i(x,y,z))
 	return order

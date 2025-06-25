@@ -14,12 +14,11 @@ config/name="Verticalgraffiti"
 run/main_scene="uid://brcxm0pfp5j6v"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
-addons/icon_finder/preview_size=24
+addons/icon_finder/preview_size=29
 
 [autoload]
 
 Debugger="*res://Scripts/debug.gd"
-IconsFonts="*res://addons/icons-fonts/icons_fonts/IconsFonts.gd"
 
 [display]
 
@@ -31,7 +30,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/grid_generator/plugin.cfg", "res://addons/icons-fonts/plugin.cfg")
+enabled=PackedStringArray("res://addons/grid_generator/plugin.cfg")
 
 [global_group]
 

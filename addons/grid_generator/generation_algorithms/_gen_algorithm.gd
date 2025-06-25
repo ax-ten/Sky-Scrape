@@ -1,36 +1,62 @@
 @tool
-extends Resource
+extends Node
 class_name GenerationAlgorithm
 # Base class for all generation strategies
 const AIR = GridGenerator.INVALID_CELL_ITEM
-const TIMEOUT : float = 1
+const TIMEOUT : float = 2
+signal step_completed
+var is_populating 
 
 
-static func new_timer() -> Timer :
-	var timer := Timer.new()
-	timer.one_shot = true
-	timer.wait_time = TIMEOUT
-	timer.timeout.connect(func():
-		timer.get_parent().remove_child(timer)
-		timer.queue_free()
+func _init() -> void:
+	is_populating = false
+
+
+static func new_timer(wait=TIMEOUT) -> Timer :
+	var t := Timer.new()
+	t.one_shot = true
+	t.wait_time = wait
+	t.timeout.connect(func():
+		t.get_parent().remove_child(t)
+		t.queue_free()
 		)
-	return timer
+	return t
 
 
 func populate(grid: GridGenerator) -> void:
+	
+	if is_populating:
+		print("populate già in corso, ignorato")
+		return
+	is_populating = true
+	
 	var t : Timer
-	while not grid.validity():
+	var validity := false
+	while not validity:
 		t = new_timer()
 		grid.add_child(t)
 		t.start()
-		while step(grid):
+		
+		while do_step(grid):
+			await get_tree().process_frame
+			
+			if not is_instance_valid(t):
+				print("t non valido")
+				break 
 			if t.get_parent() != grid:
+				print("t senza parente")
 				break
+			
+		if is_instance_valid(t):
+			t.stop()
+		validity = true #grid.validity()
+	is_populating = false
+	
 
 
 func collapse_cell(grid: GridGenerator, pos: Vector3i):
 	var options := grid.possibilities.get(pos, PackedInt32Array([AIR]))
-	print("opzioni in ", pos, ": ",options)
+	#print("opzioni in ", pos, ": ",options)
 	var mesh_id := weighted_random(grid.get_weights(options), options)
 	#print("pos: %s\nOpzioni: %s\nScelta: mesh_id %s - %s" % [str(pos), str(options), str(mesh_id), grid.mesh_library.get_item_name(mesh_id)])
 	if mesh_id != AIR:
@@ -46,6 +72,12 @@ func weighted_random(weights, options: PackedInt32Array) -> int:
 		if r <= 0.0:
 			return options[i]
 	return -1
+
+
+func do_step(grid: GridGenerator) -> bool:
+	var result := step(grid)  
+	step_completed.emit()
+	return result
 
 
 func step(grid: GridGenerator) -> bool:
