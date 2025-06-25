@@ -1,0 +1,2 @@
+extends MeshAdjacencyConfiguration
+class_name ClassAdjacencyConfiguration
