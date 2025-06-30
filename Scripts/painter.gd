@@ -13,16 +13,16 @@ var player: Player
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
 
-func paint(scale:float = 1):
+func paint(scal:float = 1):
 	currentpaint.value -= 0.01
 	var decal = PaintDecal.create(currentpaint)
-	decal.size.x *= scale
-	decal.size.z *= scale
+	decal.size.x *= scal
+	decal.size.z *= scal
 	get_tree().root.add_child(decal)
 	decal.global_position = player.global_position + Vector3.DOWN/2
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	playermesh.mesh.material.albedo_color = currentpaint.color
 	#jump_particles.draw_pass_1.material.albedo_color = currentpaint.color
 	#walk_particles.draw_pass_1.material.albedo_color = currentpaint.color

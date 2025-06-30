@@ -6,10 +6,10 @@ class_name MSAlgorithm
 var order: Array
 var current_step
 
-func _init() -> void:
+func _ready() -> void:
 	order.clear()
 	current_step = 0
-	super._init()
+	super._ready()
 
 
 func step(grid: GridGenerator) -> bool:
@@ -17,11 +17,12 @@ func step(grid: GridGenerator) -> bool:
 		order = unroll(grid)
 		current_step = 0
 	if current_step >= order.size():
-		print("Non c'è altro da generare")
+		#print("Non c'è altro da generare")
 		return false
 	var pos = order[current_step]
 	#if current_step == 0:
 		#pos = Vector3i(0,1,0)
+	#print(pos, grid.possibilities.get(pos))
 	collapse_cell(grid, pos)
 	current_step += 1
 	grid.propagate_constraints(pos)

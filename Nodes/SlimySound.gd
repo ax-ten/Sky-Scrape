@@ -15,7 +15,7 @@ func _reproduce_random(jump=false) -> void:
 static func new_player(jump=false) -> AudioStreamPlayer:
 	var asp = AudioStreamPlayer.new()
 	asp.stream = mushysounds
-	asp.volume_db = 4 if jump else -2
+	asp.volume_db = 2 if jump else -8
 	asp.pitch_scale = 1.2 if jump else 0.9
 	
 	var timer = Timer.new()

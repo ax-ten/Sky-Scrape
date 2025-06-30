@@ -3,6 +3,6 @@
 [resource]
 resource_local_to_scene = true
 resource_name = "Paint"
-albedo_color = Color(0.328201, 0.847241, 0.260761, 1)
+albedo_color = Color(0.220933, 0.317698, 0.561687, 1)
 metallic_specular = 0.0
 roughness = 0.5

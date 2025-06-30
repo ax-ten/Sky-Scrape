@@ -27,11 +27,11 @@ var nx : Callable = func():
 @export_tool_button("Reset + inizialize", "Reload")
 var clear_grid: Callable = func():
 	reset()
-	print("from: ", _from, "    to: ", _to)
+	#print("from: ", _from, "    to: ", _to)
 	possibilities = wave(_from, _to)
 	frontier.add(Vector3i(0,1,0))
 
-@export var generation: GenerationAlgorithm
+@export var generation: GenerationAlgorithm = MSAlgorithm.new()
 
 
 @export_enum("X+",  "X-", "Y+", "Y-", "Z+", "Z-") var propagation_direction = "Z+"
@@ -48,17 +48,24 @@ var clear_grid: Callable = func():
 @export var direction_matrix: Array[Direction3D] = [
 	Direction3D.create(&"X+", Vector3i(1, 0, 0)),
 	Direction3D.create(&"X-", Vector3i(-1, 0, 0)),
-	Direction3D.create(&"Y+", Vector3i(0, 0, 1)),
-	Direction3D.create(&"Y-", Vector3i(0, 0, -1)),
-	Direction3D.create(&"Z+", Vector3i(0, 1, 0)),
-	Direction3D.create(&"Z-", Vector3i(0, -1, 0)),
+	Direction3D.create(&"Y+", Vector3i(0, 0, -1)),
+	Direction3D.create(&"Y-", Vector3i(0, 0, 1)),
+	Direction3D.create(&"Z+", Vector3i(0, -1, 0)),
+	Direction3D.create(&"Z-", Vector3i(0, 1, 0)),
 ]
 
 func _validate_property(property: Dictionary):
 	if property.name == "direction_matrix" and config is not SimpleAdjacencyConfiguration:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 
-#func _init() -> void:
+func _init() -> void:
+	if mesh_library and config:
+		return
+	config = preload("res://Assets/Rules/Configurazione semplice.tres")
+	mesh_library = preload("res://Nodes/Palazzo/PalazzoMeshLibrary.tres")
+	cell_size = Vector3(3.4, 0.532, 3.4)
+	cell_scale = 0.2
+	rotation = Vector3(0, PI/2, -PI)
 #var balconi = PackedInt32Array([0,1,2,3,4,5,6,15,16,17,18,22,23,24,-1,25,26,27,28,29])
 
 #region DebugSubscriber
@@ -79,7 +86,7 @@ func reset():
 	frontier.clear()
 	possibilities.clear()
 	collapsed.clear()
-	generation._init()
+	generation._ready()
 
 
 func validity() -> bool:
@@ -106,21 +113,20 @@ func propagate_constraints(origin: Vector3i):
 		var neighbor : Vector3i = origin + dir.vector
 		#print("neighbor in collapsed: %s \nneighbor in possibilities: %s" % [str(not possibilities.has(neighbor)), str(collapsed.has(neighbor))])
 		
-		#print("neigh", neighbor, " ", possibilities.get(neighbor,"non ha opzioni"))
 		if not possibilities.has(neighbor) :
 			continue
 		var origin_possibilities = rule.get(dir.name)
+		#print(dir.name, dir.vector)
+		#print("prima: ", neighbor, possibilities[neighbor])
+		#print("prima: ", neighbor, origin_possibilities)
 		
-		var current = possibilities[neighbor]
-		var updated = PackedInt32Array(Set.intersect(
-			Set.new(current),
+		possibilities[neighbor]= PackedInt32Array(Set.intersect(
+			Set.new(possibilities[neighbor]),
 			Set.new(origin_possibilities)
 		).values())
-
-		# Aggiungi alla frontier solo se cambia davvero
-		if updated != current:
-			possibilities[neighbor] = updated
-			frontier.add(neighbor)
+		frontier.add(neighbor)
+		
+		#print("dopo: ", neighbor, possibilities[neighbor])
 
 	#print("_______________________________________")
 

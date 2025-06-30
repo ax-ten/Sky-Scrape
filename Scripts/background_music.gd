@@ -4,7 +4,7 @@ extends AudioStreamPlayer
 func _ready() -> void:
 	play(start)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if self.get_playback_position() + AudioServer.get_time_since_last_mix() > 149:
 		_loop()
 	

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://53wsk6q881tp"]
+
+[ext_resource type="Script" uid="uid://ccfhmi0c8850k" path="res://Scripts/palazzo_generator.gd" id="1_e0dsh"]
+[ext_resource type="PackedScene" uid="uid://cyvvixy3yxk1g" path="res://addons/grid_generator/grid_generator.tscn" id="2_3jr23"]
+[ext_resource type="Script" uid="uid://bu25jbpcd5qi5" path="res://Scripts/laterali_generator.gd" id="3_ipy12"]
+
+[node name="PalazzoGenerator" type="Node3D" node_paths=PackedStringArray("gridgen", "lateraligen")]
+script = ExtResource("1_e0dsh")
+gridgen = NodePath("GridGenerator")
+lateraligen = NodePath("LateraliGenerator")
+palazzo_x = 6
+palazzo_y = 5
+
+[node name="GridGenerator" parent="." instance=ExtResource("2_3jr23")]
+transform = Transform3D(4.37114e-08, 3.82137e-15, 1, 8.74228e-08, -1, 0, 1, 8.74228e-08, -4.37114e-08, 0, 0, 0)
+data = {
+"cells": PackedInt32Array()
+}
+_to = Vector3i(6, 2, 5)
+
+[node name="Measurer" parent="GridGenerator" index="2"]
+valutazioni_effettuate = 0
+
+[node name="LateraliGenerator" type="Node3D" parent="." node_paths=PackedStringArray("gridgen")]
+script = ExtResource("3_ipy12")
+gridgen = NodePath("../GridGenerator")
+
+[editable path="GridGenerator"]

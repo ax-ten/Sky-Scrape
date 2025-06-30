@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bh2wi8pbvmdoj"]
+
+[ext_resource type="Shader" uid="uid://0jigqdumgowh" path="res://Scenes/sky.gdshader" id="1_xf72g"]
+[ext_resource type="Texture2D" uid="uid://dq4lqnplikj3u" path="res://Assets/Materiali/CloudNoise.tres" id="2_lnf0f"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xcy2v"]
+width = 16
+height = 16
+
+[resource]
+shader = ExtResource("1_xf72g")
+shader_parameter/cloud_shape_sampler = ExtResource("2_lnf0f")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_xcy2v")
+shader_parameter/clouds_samples = 16
+shader_parameter/shadow_sample = 1
+shader_parameter/clouds_density = 0.6
+shader_parameter/clouds_scale = 0.5
+shader_parameter/clouds_smoothness = 0.05
+shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_shadow_intensity = 0.6
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(0.602228, 0.866752, 0.94075, 1)
+shader_parameter/bottom_color = Color(0, 0, 0, 1)
+shader_parameter/sun_scatter = Color(0.133196, 0.133197, 0.133196, 1)
+shader_parameter/astro_tint = Color(1, 0.909735, 0.688048, 1)
+shader_parameter/astro_scale = 5.1
+shader_parameter/astro_intensity = 1.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)

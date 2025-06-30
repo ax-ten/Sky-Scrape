@@ -5,73 +5,81 @@ class_name Player
 @onready var mesh = $Pivot/MeshInstance3D
 @onready var painter: Painter = $Painter
 @onready var sounds: Node = $SlimeSounds
+@onready var swipeCD : Timer = $SwipeCoolDown
+@onready var jumpCD : Timer = $JumpCoolDown
 
 var cube_size = 1.0
-var speed = 6.0
+var speed = 8.0
 var rolling = false
 var jump_speed = 3   
 var jump_charge = 1.0  
-var jump_accelerator = 5
-var jump_max = 3   
+var jump_accelerator = 15
+var jump_max = 5   
 var jumping = false
-var is_looking_up = false
+var go = false
 
-var directions = {
-		"ui_up": Vector3.FORWARD,
-		"ui_down": Vector3.BACK,
-		"ui_right": Vector3.RIGHT,
-		"ui_left": Vector3.LEFT,
-	}
-var last_direction = Vector3.FORWARD
+signal damage
+
+var last_direction = Vector3.BACK
 
 func _physics_process(delta: float) -> void:
-	
 	move_and_slide()
+		
 	if not is_on_floor():
-		# applica gravità
+		painter._on_walking(false)
 		velocity += get_gravity() * delta * PI
 		reset_scale()
 		jumping = true
-	else:
-		# resetta la velocità appena atterra
-		if jumping:
-			sounds._reproduce_random(jumping)
+	else: #se è sul pavimento
+		if jumping and go: #se è appena atterrato
 			jumping = false
-			painter._on_landing(jump_charge-1)
-			painter.paint(jump_charge)
 			velocity = Vector3.ZERO
-			jump_charge = 1.0
+			sounds._reproduce_random(jumping)
+			painter._on_landing(jump_charge - 1)
+			painter.paint(jump_charge)
+			jump_charge = 1
+		if not go:
+			painter._on_walking(false)
+			return
 		
-		if Input.is_action_pressed("ui_accept"):
+		if Input.is_action_pressed("jump") and jump_charge < jump_max:
 			charge_jump(delta)
-			is_looking_up = (last_direction == Vector3.FORWARD)
 			return
-
-		elif Input.is_action_just_released("ui_accept"):
-			release_jump(last_direction)
+		elif Input.is_action_just_released("jump") or jump_charge >= jump_max:
+			release_jump(Vector3.BACK)
 			painter._on_landing()
-			is_looking_up = false
+			painter._on_walking(false)
 			return
 		
-
-	if rolling:
-		painter._on_walking(true)
-		return
-	for action in directions.keys():
-		if Input.is_action_pressed(action):
-			last_direction = directions[action]
-			roll(last_direction)
-			if is_on_floor():
-				painter.paint()
-			break
 			
-	painter._on_walking(false)
+	if swipeCD.time_left == 0:
+		if Input.is_action_just_pressed("ui_left"):
+			swipeCD.start()
+			await swipe(Vector3.RIGHT)
+			return
+		elif Input.is_action_just_pressed("ui_right"):
+			swipeCD.start()
+			await swipe(Vector3.LEFT)
+			return
+
+	if not rolling:
+		last_direction = Vector3.BACK
+		await roll(Vector3.BACK)
+		if is_on_floor():
+			painter.paint()
+		painter._on_walking(true)
+
+func swipe(dir: Vector3):
+	var target_position = global_position + dir * 3
+	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "global_position", target_position, 0.1) 
+	await tween.finished
 
 
-
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if global_position.y < -10:
 		respawn()
+		damage.emit()
 
 func charge_jump(delta):
 	# Incrementa il charge del salto
@@ -89,47 +97,57 @@ func charge_jump(delta):
 
 func release_jump(direction):
 	#applica accelerazione del salto
-	velocity.y = jump_speed * jump_charge *1.2
+	velocity.y = jump_speed * min(jump_charge, 3) *1.2
 	velocity += direction.normalized() * jump_speed * jump_charge / 3 + Vector3.BACK*3
 	
 func reset_scale():
-	$Pivot.scale = Vector3.ONE
+	pivot.transform = Transform3D.IDENTITY
+	mesh.transform = Transform3D.IDENTITY
+	mesh.position = Vector3(0, cube_size / 2, 0)
 	#var jump_tween = get_tree().create_tween()#.set_trans(Tween.TRANS_ELASTIC)
 	#jump_tween.tween_property($Pivot, "scale", Vector3.ONE, speed)
 	#await jump_tween.finished
 
 
-func roll(dir):
+func roll(dir:Vector3, mult: float=1.0):
 	rolling = true
+	var step = cube_size * mult
 	# Step 1: Offset the pivot.
-	pivot.translate(dir * cube_size / 2)
-	mesh.global_translate(-dir * cube_size / 2)
+	pivot.translate(dir * step / 2)
+	mesh.global_translate(-dir * step / 2)
 
 	# Step 2: Animate the rotation.
 	var axis = dir.cross(Vector3.DOWN)
-	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)#.set_ease(Tween.EASE_IN)
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(pivot, "transform",
-			pivot.transform.rotated_local(axis, PI/2), 1 / speed)
+		pivot.transform.rotated_local(axis, PI/2), 1 / speed)
 	await tween.finished
 
 	# Step 3: Finalize the movement and reset the offset.
-	transform.origin += dir * cube_size
+	transform.origin += dir * step
 	var b = mesh.global_transform.basis
 	pivot.transform = Transform3D.IDENTITY
 	mesh.position = Vector3(0, cube_size / 2, 0)
 	mesh.global_transform.basis = b
 	rolling = false
+
 	if is_on_floor():
 		sounds._reproduce_random()
-	
-	# Cast a ray before moving to check for obstacles
+
+	## Cast a ray before moving to check for obstacles
 	var space = get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(mesh.global_position,
-		mesh.global_position + dir * cube_size, collision_mask, [self])
+	var ray = PhysicsRayQueryParameters3D.create(
+		mesh.global_position,
+		mesh.global_position + dir * step,
+		collision_mask,
+		[self]
+	)
 	var collision = space.intersect_ray(ray)
 	if collision:
-		print("collision detected")
-		return
+		tween = create_tween().set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(self, "global_position", global_position+Vector3(0,1,0),0.05)
+		await tween.finished
+
 	
 
 func respawn():

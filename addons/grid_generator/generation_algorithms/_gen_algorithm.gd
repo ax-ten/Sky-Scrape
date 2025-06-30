@@ -8,7 +8,7 @@ signal step_completed
 var is_populating 
 
 
-func _init() -> void:
+func _ready() -> void:
 	is_populating = false
 
 
@@ -38,7 +38,7 @@ func populate(grid: GridGenerator) -> void:
 		t.start()
 		
 		while do_step(grid):
-			await get_tree().process_frame
+			#await get_tree().process_frame
 			
 			if not is_instance_valid(t):
 				print("t non valido")

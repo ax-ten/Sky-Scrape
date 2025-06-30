@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://52sh0gg6whc"]
+[gd_scene load_steps=8 format=4 uid="uid://52sh0gg6whc"]
 
 [ext_resource type="Texture2D" uid="uid://b1u1tlubvxbm8" path="res://Nodes/Enemies/Gabbiano_0.png" id="1_mmwu5"]
+[ext_resource type="Script" uid="uid://vajclhm3tcwr" path="res://Scripts/enemy.gd" id="1_prtyn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5iyr"]
 resource_name = "Material.1"
@@ -43,14 +44,17 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_acq8d")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_32qyu"]
-size = Vector3(1, 0.232666, 3.17358)
+size = Vector3(0.419922, 1.69649, 1.07474)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bqd40"]
-size = Vector3(0.978271, 0.645508, 0.398438)
+[sub_resource type="BoxShape3D" id="BoxShape3D_prtyn"]
+size = Vector3(0.369629, 1.49503, 1.17308)
 
 [node name="Gabbiano" type="CharacterBody3D"]
+collision_layer = 0
+script = ExtResource("1_prtyn")
 
 [node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1.91069e-15, 1, -2.18557e-07, 4.37114e-08, 2.18557e-07, 1, 1, -1.14641e-14, -4.37114e-08, 0.00458747, 0, 0)
 
 [node name="Layer_1" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(0.2, 0, 0, 0, -8.74228e-09, 0.2, 0, -0.2, -8.74228e-09, 2.57099, -0.0407271, -1.59367)
@@ -58,9 +62,15 @@ mesh = SubResource("ArrayMesh_ppx64")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.472394, 0.284128, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.122296, 0.108827, -0.0436562)
 shape = SubResource("BoxShape3D_32qyu")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0108643, 0.48057, 0)
-shape = SubResource("BoxShape3D_bqd40")
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270187, 0.00770599, -0.0123041)
+shape = SubResource("BoxShape3D_prtyn")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

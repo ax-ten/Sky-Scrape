@@ -128,13 +128,14 @@ size = Vector3(0.681641, 1, 0.737305)
 [sub_resource type="SphereShape3D" id="SphereShape3D_qh04r"]
 
 [node name="secchio di vernice" type="RigidBody3D"]
+transform = Transform3D(-0.952834, 0, 0.303493, 0, 1, 0, -0.303493, 0, -0.952834, 0, 0, 0)
 rotation_edit_mode = 1
 gravity_scale = 0.0
 script = ExtResource("1_bxvba")
 paintmaterial = ExtResource("3_qh04r")
 
 [node name="Pivot" type="Node3D" parent="."]
-transform = Transform3D(0.937152, 0.317364, -0.138541, -0.342692, 0.794719, -0.499824, -0.0485369, 0.516605, 0.854013, 0, 0.561526, 0)
+transform = Transform3D(0.890581, 0.107511, -0.440004, -0.342709, 0.794744, -0.499851, 0.296013, 0.596747, 0.745044, 0, 0.599999, 0)
 
 [node name="Bucket" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1.49012e-08, 1, 2.98023e-08, -1, 8.9407e-08, 0.951531, 0.0174638, -1.47169)
@@ -156,7 +157,7 @@ skeleton = NodePath("")
 
 [node name="Paint" type="Node" parent="."]
 script = ExtResource("2_bxvba")
-color = Color(0.208492, 0.4851, 0.739617, 1)
+color = Color(0.220933, 0.317698, 0.561687, 1)
 saturation_min = 0.539
 saturation_max = 0.875
 illumination_min = 0.559

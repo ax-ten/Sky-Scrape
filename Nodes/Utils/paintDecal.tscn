@@ -19,7 +19,7 @@ color_ramp = SubResource("Gradient_kyiu3")
 noise = SubResource("FastNoiseLite_34wjx")
 
 [node name="PaintDecal" type="Decal"]
-size = Vector3(1.01, 2, 1.01)
+size = Vector3(1.3, 2, 1.3)
 texture_albedo = ExtResource("1_kyiu3")
 texture_normal = SubResource("NoiseTexture2D_i77gp")
 texture_orm = ExtResource("1_kyiu3")

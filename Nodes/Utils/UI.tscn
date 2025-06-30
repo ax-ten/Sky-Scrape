@@ -1,18 +1,35 @@
-[gd_scene load_steps=10 format=3 uid="uid://bt3i6pct5kdy3"]
+[gd_scene load_steps=15 format=3 uid="uid://bt3i6pct5kdy3"]
 
 [ext_resource type="FontFile" uid="uid://cf413mvbhnurg" path="res://Assets/ARCADECLASSIC.TTF" id="1_qui0h"]
 [ext_resource type="Script" uid="uid://f7lu2wica4vk" path="res://Scripts/ui.gd" id="1_vrfts"]
 [ext_resource type="Texture2D" uid="uid://c2t3qphlkhhky" path="res://Assets/Icons/Pausa_Esteso.png" id="2_vrfts"]
 [ext_resource type="Texture2D" uid="uid://bwpcvwuey0ycq" path="res://Assets/Icons/Pausa_Premuto.png" id="3_0mc3e"]
 [ext_resource type="Texture2D" uid="uid://miyfps2si808" path="res://Assets/Icons/cuoricino.png" id="3_2n5f6"]
-[ext_resource type="Texture2D" uid="uid://fv4lar2ogu6k" path="res://Assets/Icons/Menu_esteso.png" id="4_2n5f6"]
 [ext_resource type="Texture2D" uid="uid://b6d5e2v7p5l0h" path="res://Assets/Icons/Go!.png" id="7_75pfj"]
+[ext_resource type="AudioStream" uid="uid://dwy6r44s0da58" path="res://Assets/Audio/Hit 1.mp3" id="7_dovdp"]
 [ext_resource type="AudioStream" uid="uid://fgvrs8b0jcls" path="res://Assets/Audio/arcade-countdown.mp3" id="7_u66u5"]
+[ext_resource type="Texture2D" uid="uid://dqgyp64v084k" path="res://Assets/Icons/keyboard/T_Space_Key_Casual.png" id="8_cwjlk"]
+[ext_resource type="Texture2D" uid="uid://b56r4rilxm2k6" path="res://Assets/Icons/keyboard/T_Left_Key_Casual.png" id="9_dovdp"]
+[ext_resource type="Texture2D" uid="uid://cd5qmy3gy6874" path="res://Assets/Icons/keyboard/T_Right_Key_Casual.png" id="10_wfmqs"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2cqfq"]
-load_path = "res://.godot/imported/Menu_compresso.png-bd37148af56cac8d2ae013786d673837.ctex"
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dovdp"]
+bg_color = Color(0.342552, 0.232933, 0.427617, 0.905882)
 
-[node name="UI" type="AspectRatioContainer" node_paths=PackedStringArray("score_label") groups=["UI"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wfmqs"]
+bg_color = Color(0.404237, 0.237922, 0.365846, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btpfw"]
+bg_color = Color(0.629701, 0.372798, 0.532355, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[node name="UI" type="AspectRatioContainer" node_paths=PackedStringArray("score_label", "pause_menu", "pause_button", "over_menu", "slider_container") groups=["UI"]]
 texture_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,73 +38,92 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 0.5
 script = ExtResource("1_vrfts")
-score_label = NodePath("VBoxContainer/HBoxContainer2/Score")
+score_label = NodePath("VBoxContainer/Panel/HBoxContainer2/Score")
+pause_menu = NodePath("PauseMenu")
+pause_button = NodePath("VBoxContainer/Panel/Pause")
+over_menu = NodePath("OverMenu")
+slider_container = NodePath("PauseMenu/VBoxContainer/gridcontainer")
+metadata/_edit_vertical_guides_ = [256.0]
+
+[node name="Istruzioni" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Istruzioni"]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 12.0
+offset_right = 346.0
+offset_bottom = 35.0
+text = "Premi [Esc]  per le opzioni"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="Spacer" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(0, 842.7)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Panel" type="Panel" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dovdp")
+
+[node name="GO" type="TextureRect" parent="VBoxContainer/Panel"]
+visible = false
+texture_filter = 2
+layout_mode = 2
+offset_top = -190.0
+offset_right = 512.0
+offset_bottom = -16.0194
+texture = ExtResource("7_75pfj")
+expand_mode = 5
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel"]
+layout_mode = 2
+offset_top = 9.715
+offset_right = 512.0
+offset_bottom = 79.715
 size_flags_vertical = 0
 alignment = 2
 
-[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-
-[node name="Menu" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(75, 0)
-layout_mode = 2
-texture_normal = ExtResource("4_2n5f6")
-texture_pressed = SubResource("CompressedTexture2D_2cqfq")
-stretch_mode = 4
-
-[node name="Life" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="Life" type="HBoxContainer" parent="VBoxContainer/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/HBoxContainer/Life"]
 visible = false
 layout_mode = 2
 texture = ExtResource("3_2n5f6")
 expand_mode = 3
 
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/Panel/HBoxContainer/Life"]
 visible = false
 layout_mode = 2
 texture = ExtResource("3_2n5f6")
 expand_mode = 3
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/Life"]
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/Panel/HBoxContainer/Life"]
 visible = false
 layout_mode = 2
 texture = ExtResource("3_2n5f6")
 expand_mode = 3
 
-[node name="Pause" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(75, 0)
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Panel"]
 layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("2_vrfts")
-texture_pressed = ExtResource("3_0mc3e")
-stretch_mode = 4
-
-[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
+offset_top = 89.085
+offset_right = 512.0
+offset_bottom = 170.085
 alignment = 1
 
-[node name="Score" type="Label" parent="VBoxContainer/HBoxContainer2"]
+[node name="Score" type="Label" parent="VBoxContainer/Panel/HBoxContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qui0h")
 theme_override_font_sizes/font_size = 80
@@ -95,25 +131,266 @@ text = "902839"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer2" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 400)
+[node name="Pause" type="TextureButton" parent="VBoxContainer/Panel"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
+offset_left = 20.0
+offset_top = 98.99
+offset_right = 95.0
+offset_bottom = 164.99
+toggle_mode = true
+texture_normal = ExtResource("2_vrfts")
+texture_pressed = ExtResource("3_0mc3e")
+stretch_mode = 4
 
-[node name="GO" type="TextureRect" parent="VBoxContainer"]
-visible = false
-texture_filter = 2
-layout_mode = 2
-texture = ExtResource("7_75pfj")
-expand_mode = 5
-stretch_mode = 3
+[node name="PerIniziare" type="Label" parent="VBoxContainer/Panel"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 15.0
+offset_right = 423.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 26
+text = "Premi un tasto per iniziare"
+horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 2
-horizontal_scroll_mode = 2
-vertical_scroll_mode = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
-layout_mode = 2
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_dovdp")
+volume_db = -6.367
 
 [node name="CountDown" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_u66u5")
+volume_db = -16.0
+
+[node name="PauseMenu" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 600)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_wfmqs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 25.0
+offset_right = 258.0
+offset_bottom = 584.0
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "In pausa!"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="gridcontainer" type="GridContainer" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/gridcontainer"]
+layout_mode = 2
+text = "Generale"
+
+[node name="GeneralSlider" type="HSlider" parent="PauseMenu/VBoxContainer/gridcontainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Label2" type="Label" parent="PauseMenu/VBoxContainer/gridcontainer"]
+layout_mode = 2
+text = "Musica"
+
+[node name="MusicSlider" type="HSlider" parent="PauseMenu/VBoxContainer/gridcontainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+
+[node name="Label3" type="Label" parent="PauseMenu/VBoxContainer/gridcontainer"]
+visible = false
+layout_mode = 2
+text = "Musica"
+
+[node name="HSlider3" type="HSlider" parent="PauseMenu/VBoxContainer/gridcontainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+
+[node name="Spacer3" type="Control" parent="PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Video"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="gridcontainer2" type="GridContainer" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label4" type="Label" parent="PauseMenu/VBoxContainer/gridcontainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cielo semplice"
+
+[node name="CheckButton" type="CheckButton" parent="PauseMenu/VBoxContainer/gridcontainer2"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Spacer4" type="Control" parent="PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Comandi"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Salto (caricato)"
+
+[node name="TSpaceKeyCasual" type="TextureRect" parent="PauseMenu/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 60.585)
+layout_mode = 2
+texture = ExtResource("8_cwjlk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="PauseMenu/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Slancio laterale"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="TLeftKeyCasual" type="TextureRect" parent="PauseMenu/VBoxContainer/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(37.14, 0)
+layout_mode = 2
+texture = ExtResource("9_dovdp")
+expand_mode = 5
+
+[node name="TRightKeyCasual" type="TextureRect" parent="PauseMenu/VBoxContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("10_wfmqs")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Questionario" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Rispondi al questionario"
+
+[node name="Button" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Ricomincia"
+
+[node name="Esci" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Esci"
+
+[node name="OverMenu" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(241.35, 156.345)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_btpfw")
+
+[node name="Label" type="Label" parent="OverMenu"]
+layout_mode = 2
+offset_left = 12.0
+offset_top = -32.0
+offset_right = 224.0
+offset_bottom = 22.0
+theme_override_colors/font_outline_color = Color(0.531106, 0.301488, 0.443789, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 39
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -60.0
+offset_right = 98.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Spacer2" type="Control" parent="OverMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Questionario" type="Button" parent="OverMenu/VBoxContainer"]
+layout_mode = 2
+text = "Rispondi al questionario"
+
+[node name="Button" type="Button" parent="OverMenu/VBoxContainer"]
+layout_mode = 2
+text = "Prova ancora"
+
+[node name="Esci" type="Button" parent="OverMenu/VBoxContainer"]
+layout_mode = 2
+text = "Esci"
+
+[node name="Spacer3" type="Control" parent="OverMenu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="OverMenu"]
+layout_mode = 0
+offset_left = -102.0
+offset_top = 423.0
+offset_right = 343.0
+offset_bottom = 477.0
+theme_override_font_sizes/font_size = 27
+text = "Grazie per aver giocato!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/Panel/Pause" to="." method="_on_pause"]
+[connection signal="toggled" from="PauseMenu/VBoxContainer/gridcontainer2/CheckButton" to="." method="_on_sky_toggle"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/Questionario" to="." method="_on_questionairre"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/Button" to="." method="_on_retry"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/Esci" to="." method="_on_quit"]
+[connection signal="pressed" from="OverMenu/VBoxContainer/Questionario" to="." method="_on_questionairre"]
+[connection signal="pressed" from="OverMenu/VBoxContainer/Button" to="." method="_on_retry"]
+[connection signal="pressed" from="OverMenu/VBoxContainer/Esci" to="." method="_on_quit"]

@@ -1,13 +1,14 @@
 extends Node3D
 
-@export var playerscene :PackedScene
-var player :CharacterBody3D
+@onready var player : Player = get_tree().get_first_node_in_group("Player")
+var starting_position := Vector3(0,0,14)
 
 func _ready() -> void:
-	player = playerscene.instantiate()
-	add_child(player)
 	respawn()
 	
-func respawn() ->void:
-	player.global_position = global_position
+func respawn(death:bool=false) ->void:
+	if death:
+		player.global_position = starting_position
+	else:
+		player.global_position.y += 20
 	
